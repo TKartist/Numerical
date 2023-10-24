@@ -1,0 +1,34 @@
+load('householder/housegraph.mat');
+degree = sum(A, 2);
+[degreeSorted, indexNames] = sort(degree);
+count = length(degreeSorted);
+maxDegree = degreeSorted(count);
+coauthors = strings(5, maxDegree)
+authors = strings(5, 1);
+k = 1;
+for i = count : -1 : count - 4 
+    ind = indexNames(i);
+    j = 1;
+    while ~isspace(name(ind, j))
+        authors(k) = strcat(authors(k), name(ind, j));
+        j = j + 1;
+    end
+    k = k + 1;
+end
+l = 1;
+for i = count: -1 : count -4
+    nameCount = 1;
+    ind = indexNames(i);
+    for j = 1 : count
+        if (A(ind, j) == 1)
+            k = 1;
+            while ~isspace(name(j, k))
+                coauthors(l, nameCount) = strcat(coauthors(l, nameCount), name(j, k));
+                k = k + 1;
+            end
+            nameCount = nameCount + 1;
+        end
+    end
+l = l + 1;
+end
+     

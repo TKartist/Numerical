@@ -1,0 +1,36 @@
+load('householder/housegraph.mat');
+
+nameCell = cellstr(name);
+
+
+indG = find(strcmp(nameCell, 'Golub'));
+indM = find(strcmp(nameCell, 'Moler'));
+indS = find(strcmp(nameCell, 'Saunders'));
+indTC = find(strcmp(nameCell, 'TChan'));
+indexDemmel = find(strcmp(nameCell, 'Demmel'));
+
+
+common_Golub_Moler = find(A(indexGolub,:) .* A(indexMoler,:));
+common_Golub_Saunders = find(A(indexGolub,:) .* A(indexSaunders,:));
+common_TChan_Demmel = find(A(indexTChan,:) .* A(indexDemmel,:));
+
+
+names_Golub_Moler = nameCell(common_Golub_Moler);
+names_Golub_Saunders = nameCell(common_Golub_Saunders);
+names_TChan_Demmel = nameCell(common_TChan_Demmel);
+
+% Display the results(optional stuff)
+disp('Golub and Moler:');
+for i = 1:numel(names_Golub_Moler)
+    disp(names_Golub_Moler{i});
+end
+
+disp(' Golub and Saunders:');
+for i = 1:numel(names_Golub_Saunders)
+    disp(names_Golub_Saunders{i});
+end
+
+disp('TChan and Demmel:');
+for i = 1:numel(names_TChan_Demmel)
+    disp(names_TChan_Demmel{i});
+end

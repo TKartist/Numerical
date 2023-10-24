@@ -1,0 +1,51 @@
+function [cut_recursive,cut_kway] = Bench_metis(picture)
+% Compare recursive bisection and direct k-way partitioning,
+% as implemented in the Metis 5.0.2 library.
+%
+% D.P & O.S for Numerical Computing at USI
+
+
+%  Add necessary paths
+addpaths_GP;
+
+% Graphs in question
+% load 'helicopter.mat' ;
+% load 'skirt.mat';
+
+ 
+% Steps
+% 1. Initialize the cases
+
+[h] = load('helicopter.mat');
+[s] = load('skirt.mat');
+
+ hW = h.Problem.A;
+ hC = h.Problem.aux.coords;
+
+ sW = s.Problem.A;
+ sC = s.Problem.aux.coords;
+% 2. Call metismex to
+%     a) Recursively partition the graphs in 16 and 32 subsets.
+ [mapRecH16, edgecutRecH16] = metismex('PartGraphRecursive', hW, 16);
+ [mapRecH32, edgecutRecH32] = metismex('PartGraphRecursive', hW, 32);
+ [mapRecS16, edgecutRecS16] = metismex('PartGraphRecursive', sW, 16);
+ [mapRecH32, edgecutRecH32] = metismex('PartGraphRecursive', sW, 32);
+%     b) Perform direct k-way partitioning of the graphs in 16 and 32 subsets.
+ [mapKH16, edgecutKH16] = metismex('PartGraphKWay', hW, 16);
+ [mapKH32, edgecutKH32] = metismex('PartGraphKWay', hW, 32);
+ [mapKS16, edgecutKS16] = metismex('PartGraphKWay', sW, 16);
+ [mapKH32, edgecutKH32] = metismex('PartGraphKWay', sW, 32);
+% 3. Visualize the results for 32 partitions
+gplotmap(hW, hC, mapRecH32)
+title('')
+pause;
+gplotmap(hW, hC, mapKH32)
+pause;
+
+gplotmap(sW, sC, mapRecH32)
+title('')
+pause;
+gplotmap(sW, sC, mapKS32)
+pause;
+
+end
