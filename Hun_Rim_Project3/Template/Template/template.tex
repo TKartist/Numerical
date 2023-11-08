@@ -278,7 +278,55 @@ from. } \\
 
 Even though K-means is also able to create clusters, the clusters are unbalanced with some high density areas and some significantly lower density areas. (Density, as in number of nodes in a given area) \\
 
-On the otherhand, spectral clusters have a balanced graph with similar density level all over the graph. K-means clusters are unbalanced because it is not as smart as the spectral. K-means is incapable of recognizing densities and just creates clusters within a defined radius, hence, creating an unbalanced clusters.
+On the otherhand, spectral clusters have a balanced graph with similar density level all over the graph. K-means clusters are unbalanced because it is not as smart as the spectral. K-means is incapable of recognizing densities and just creates clusters within a defined radius, hence, creating an unbalanced clusters. \\
+
+\item {Report in the table below, the number of nodes per cluster and plot a histogram. What can you observe?} \\
+
+
+\begin{figure}
+\begin{center}
+\begin{tabular}{|l|r|r|} \hline
+Case & Spectral & K-means \\
+\hline
+grid2 & 1361 & 604 \\
+\hline
+barth & 1861 & 59 \\
+\hline
+3elt & 1814 & 3010 \\
+\hline
+ 
+\end{tabular}
+\end{center}
+\caption{Number of nodes per cluster when ${K=4}$}
+\end{figure}
+
+
+\begin{figure}[h!]
+    \begin{minipage}[c]{1\linewidth}
+        \centering
+        \includegraphics[width=0.4\linewidth]{./figures/grid2Histogram.png}
+    \end{minipage}
+  \caption{Spectral Clusters Histogram(top), K-mean Clusters Histogram(bottom), grid2 dataset}
+\end{figure}
+
+\begin{figure}[h!]
+    \begin{minipage}[c]{1\linewidth}
+        \centering
+        \includegraphics[width=0.4\linewidth]{./figures/barthHistogram.png}
+    \end{minipage}
+  \caption{Spectral Clusters Histogram(top), K-mean Clusters Histogram(bottom), Barth dataset}
+\end{figure}
+
+\begin{figure}[h!]
+    \begin{minipage}[c]{1\linewidth}
+        \centering
+        \includegraphics[width=0.4\linewidth]{./figures/3eltHistogram.png}
+    \end{minipage}
+  \caption{Spectral Clusters Histogram(top), K-mean Clusters Histogram(bottom), 3elt dataset}
+\end{figure}
+
+{From the observation of the histograms, in general, the spread nodes per cluster in spectral clustering is more balanced than the spread of nodes per cluster in K-mean clustering. Which matches the observation made in the previous question from the cluster graphs.}
+
 
 \end{enumerate}
 

@@ -9,9 +9,9 @@ addpath ../datasets
 addpath ../datasets/Meshes
 
 % load airfoil1.mat
-load barth.mat
+% load barth.mat
 % load grid2.mat
-% load 3elt.mat
+ load 3elt.mat
 
 % Specify the number of clusters
 K = 4;
@@ -31,7 +31,7 @@ L = CreateLapl(W);
 
 % Eigen-decomposition
 L = sparse(L);
-[eigvecs, eigvals] = eigs(L,3,'SA');
+[eigvecs, ~] = eigs(L,3,'SA');
 eig2 = eigvecs(:,2);
 eig3 = eigvecs(:,3);
 spec_coords = [eig2,eig3];
@@ -103,10 +103,3 @@ end
 %% 2.3) Calculate the number of nodes per cluster
 [Spec_nodes,Kmeans_nodes] = ClusterMetrics(K, spectralClusters, kmeansClusters);
 
-
- figure;
- bar([Spec_nodes, Kmeans_nodes], 'grouped');
- legend('Spectral Clustering', 'K-means Clustering');
- xlabel('Clusters');
- ylabel('Number of Nodes');
- title('Number of Nodes Per Cluster');

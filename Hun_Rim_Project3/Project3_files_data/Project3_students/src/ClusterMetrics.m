@@ -10,4 +10,19 @@ function [Spec_nodes,Kmeans_nodes] = ClusterMetrics(K,x_spec,x_kmeans)
      Kmeans_nodes(i) = sum(x_kmeans == i);
  end
 
+
+ figure;
+ subplot(2,1,1);
+ bar(1:K, Spec_nodes);
+ xlabel('Clusters');
+ ylabel('Number of Nodes');
+ title('Number of Nodes Per Cluster, Spectral Clustering');
+ 
+ subplot(2,1,2);
+ bar(1:K, Kmeans_nodes);
+ bar(Kmeans_nodes, 'grouped');
+ xlabel('Clusters');
+ ylabel('Number of Nodes');
+ title('Number of Nodes Per Cluster, Kmean clustering');
+
 end
