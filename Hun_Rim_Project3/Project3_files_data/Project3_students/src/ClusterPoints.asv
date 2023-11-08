@@ -9,10 +9,10 @@ addpath ../datasets
 addpath ../datasets/Meshes
 
 % Specify the number of clusters
-K = 2; % choose any K value
+K = 4; % choose any K value
 
 %% 1.1) Get coordinate list from pointclouds
-Pts_halfk = halfkernel(); %can change to any dataset to view the graphical representations
+Pts_halfk = half(); %can change to any dataset to view the graphical representations
 figure;
 
 scatter(Pts_halfk(:,1), Pts_halfk(:,2), 'filled');
