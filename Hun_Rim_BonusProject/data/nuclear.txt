@@ -1,0 +1,11 @@
+Source: https://www.indexmundi.com/energy/?country=cn&product=nuclear&graph=consumption
+
+year	consumption	change
+1999	14.09	4.68 %
+2000	15.90	12.85 %
+2001	16.60	4.40 %
+2002	25.17	51.63 %
+2003	41.66	65.51 %
+2004	47.95	15.10 %
+2005	50.33	4.96 %
+2006	54.85	8.98 %
