@@ -1,4 +1,9 @@
 \documentclass[unicode,11pt,a4paper,oneside,numbers=endperiod,openany]{scrartcl}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{enumitem}
+
+\newcommand{\norm}[1]{\lvert\lvert #1 \rvert\rvert}
 
 \renewcommand{\thesubsection}{\arabic{subsection}}
 
@@ -18,8 +23,266 @@
 \newpage
 
 \section*{Exercise 1: Inconsistent systems of equations [10 points]}
+Consider the following inconsistent systems of equations: \\
+
+\begin{center}
+(a) ${A_1x = b_1}$, where
+
+\vspace{10px}
+
+\begin{equation*}
+A_1 =
+\begin{bmatrix}
+1 & 0 \\
+1 & 0 \\
+1 & 0
+\end{bmatrix}
+b_1=
+\begin{bmatrix}
+5 \\
+2 \\
+4
+\end{bmatrix}
+\end{equation*}
+\end{center}
+
+\begin{center}
+(b) ${A_2x = b_2}$, where
+
+\vspace{10px}
+
+\begin{equation*}
+A_2 =
+\begin{bmatrix}
+1 & 1 & 0 \\
+0 & 1 & 1 \\
+1 & 2 & 1 \\
+1 & 0 & 1
+\end{bmatrix}
+b_2=
+\begin{bmatrix}
+2 \\
+2 \\
+3 \\
+4
+\end{bmatrix}
+\end{equation*}
+\end{center}
+
+Find the least squares solution ${x^*}$ and compute the Euclidean norm of the residual, SE and RMSE. \\
+
+\textbf{solution:} \\
+Least Square solution ${x^*}$ can be obtained by solving the following equation:
+
+\vspace{20px}
+
+\begin{equation}
+ A^TAx = A^Tb
+\end{equation}
+
+\vspace{20px}
+
+Then from the ${x^*}$ obtained, we can get the residual vector as following and from it, we can calculate the Euclidean norm and proceed to SE (Sum of Square Residuals) and RMSE (Root Mean Squared Error):
+
+\vspace{20px}
+
+\begin{equation}
+ r = Ax^* - b
+\end{equation}
+
+\vspace{20px}
+
+\begin{equation}
+ Euclidean Norm = \norm{r}_2
+\end{equation}
+
+\vspace{20px}
+
+\begin{equation}
+ SE = \norm{r}_2^2
+\end{equation}
+
+\vspace{20px}
+
+\begin{equation}
+ RMSE = \sqrt{\frac{SE}{m}}
+\end{equation}
+
+\vspace{20px}
+
+Where ${m}$ is the number of rows in residual vector. \\
+
+\newpage
+(a)
+\begin{equation*}
+\begin{bmatrix}
+1 & 1 & 1 \\
+0 & 0 & 0
+\end{bmatrix}
+\begin{bmatrix}
+1 & 0 \\
+1 & 0 \\
+1 & 0
+\end{bmatrix}
+x = \begin{bmatrix}
+1 & 1 & 1 \\
+0 & 0 & 0
+\end{bmatrix}
+\begin{bmatrix}
+5 \\
+2 \\
+4
+\end{bmatrix}
+\end{equation*}
+\begin{equation*}
+ \begin{bmatrix}
+  3 & 0 \\
+  0 & 0
+ \end{bmatrix}x=
+ \begin{bmatrix}
+  11 \\
+  0
+ \end{bmatrix}
+\end{equation*}
+\begin{equation*}
+ x^* = \begin{bmatrix}
+        3.6667 \\
+        0
+       \end{bmatrix}
+\end{equation*}
+\begin{equation*}
+ r^* = \begin{bmatrix}
+        1 & 0 \\
+        1 & 0 \\
+        1 & 0
+       \end{bmatrix}
+       \begin{bmatrix}
+        3.6667 \\
+        0
+       \end{bmatrix} -
+       \begin{bmatrix}
+        5 \\
+        2 \\
+        4
+       \end{bmatrix} =
+       \begin{bmatrix}
+        -1.3333\\
+        1.6667 \\
+        -0.3333
+       \end{bmatrix}
+\end{equation*}
+\begin{equation*}
+ EuclideanNorm = \norm{r}_2 = \sqrt{(-1.3333)^2 + (1.6667)^2 + (-0.3333)^2} = \sqrt{4.6667} \approx 2.1602
+\end{equation*}
+
+\begin{equation*}
+ SE = \norm{r}_2^2 = (-1.3333)^2 + (1.6667)^2 + (-0.3333)^2 \approx 4.6667
+\end{equation*}
+
+\begin{equation*}
+ RMSE = \sqrt{\frac{\norm{r}_2^2}{m}} \approx \sqrt{\frac{4.6667}{3}} \approx 1.2472 
+\end{equation*}
+
+(b)
+\begin{equation*}
+\begin{bmatrix}
+1 & 0 & 1 & 1 \\
+1 & 1 & 2 & 0 \\
+0 & 1 & 1 & 1
+\end{bmatrix}
+\begin{bmatrix}
+1 & 1 & 0 \\
+0 & 1 & 1 \\
+1 & 2 & 1 \\
+1 & 0 & 1
+\end{bmatrix}
+x = \begin{bmatrix}
+1 & 0 & 1 & 1 \\
+1 & 1 & 2 & 0 \\
+0 & 1 & 1 & 1
+\end{bmatrix}
+\begin{bmatrix}
+2 \\
+2 \\
+3 \\
+4
+\end{bmatrix}
+\end{equation*}
+
+\begin{equation*}
+ \begin{bmatrix}
+  3 & 3 & 2 \\
+  3 & 6 & 3 \\
+  2 & 3 & 3
+ \end{bmatrix}x = 
+ \begin{bmatrix}
+  9 \\
+  10 \\
+  9
+ \end{bmatrix}
+\end{equation*}
+
+If we re-arrange the formula for ${x^*}$ we get:
+
+\begin{equation}
+ x^* = (A^T_2A_2)^{-1}A^T_2b_2
+\end{equation}
+
+and the resulting ${x^*}$ will be
+
+\begin{equation*}
+ x^* \approx \begin{bmatrix}
+        2 \\
+        -0.3333 \\
+        2
+       \end{bmatrix}
+\end{equation*}
+
+\begin{equation*}
+ r = \begin{bmatrix}
+1 & 1 & 0 \\
+0 & 1 & 1 \\
+1 & 2 & 1 \\
+1 & 0 & 1
+\end{bmatrix}
+\begin{bmatrix}
+        2 \\
+        -0.3333 \\
+        2
+\end{bmatrix} -
+\begin{bmatrix}
+2 \\
+2 \\
+3 \\
+4
+\end{bmatrix} \approx
+\begin{bmatrix}
+-0.3333 \\
+-0.3333 \\
+0.3333 \\
+0
+\end{bmatrix}
+\end{equation*}
+
+\begin{equation*}
+ EuclideanNorm = \norm{r}_2 \approx \sqrt{(-0.3333)^2 + (-0.3333)^2 + (0.3333)^2 + (0)^2} \approx \sqrt{0.3333} \approx 0.5774
+\end{equation*}
+
+\begin{equation*}
+ SE = \norm{r}_2^2 = (-0.3333)^2 + (-0.3333)^2 + (0.3333)^2 + (0)^2 \approx 0.3333
+\end{equation*}
+
+\begin{equation*}
+ RMSE = \sqrt{\frac{\norm{r}_2^2}{m}} \approx \sqrt{\frac{0.3333}{4}} \approx 0.2887
+\end{equation*}
 
 \section*{Exercise 2: Polynomials models for least squares [20 points]}
+
+\begin{enumerate}[label=(\alph*)]
+ \item Write ${leastSquare.m}$ function which calculates least squares, euclidean norm, SE and RMSE of a matrix A and vector b, and write a script ${ex2a.m}$ which computes the result of exercise 1.
+\end{enumerate}
+
+
 
 \section*{Exercise 3: Analysis of periodic data [20 points]}
 

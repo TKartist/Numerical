@@ -1,0 +1,4 @@
+function [x] = leastSquares(A, b)
+    x = lsqr(A, b);
+    EuclideanNorm = norm(x);
+end
