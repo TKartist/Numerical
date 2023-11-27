@@ -420,6 +420,8 @@ oil data? And for the kerosene? Provide an estimate of the crude oil and kerosen
 the three models and compare the values obtained with the real values reported in the data source. Comment on
 your results. \\
 
+\newpage
+
 \begin{center}
 \begin{tabular}{|l|r|r|r|r|} \hline
 Model Type & EuclideanNorm & Standard Error & RMSE \\
@@ -438,7 +440,9 @@ Model Type & EuclideanNorm & Standard Error & RMSE \\
   \hline
 \end{tabular}
 \end{center}
-\newpage
+
+\vspace{20px}
+
 \begin{tabular}{|l|r|r|r|r|} \hline
 Energy Type & Linear Estimation & Quadratic Estimation & Cubic Estimation & Real Data \\
 \hline
@@ -447,6 +451,7 @@ Energy Type & Linear Estimation & Quadratic Estimation & Cubic Estimation & Real
 Kerosene & 207.2856(-23.6\%) & 225.1621 (-16.9\%) & 248.4740 (-7.3\%) & 267.89\\
 \hline
 \end{tabular}
+\vspace{20px}
 
 To make a simple analysis, having a smaller Euclidean Norm suggests better fit of the model to the original data as smaller euclidean norm indicates smaller residuals, and naturally bigger would indicate the opposite. Similarly, Standard Error (SE) and Root Mean Squared Error (RMSE) indicates better fit of the model when they are small. \\
 
@@ -454,11 +459,73 @@ Under this assumption, the data on the table suggests for all the cases, cubic m
 
 However, the prediction made for 2012 from these models suggest, even though cubic model proved to be the best for kerosene production trend prediction, in terms of prediction for crude oil production, quadratic model showed more accurate result. However, prediction of a singular value is not enough to make a conclusion that quadratic model will always perform better for kerosene production prediction or cubic model will always perform better for crude oil production prediction as the 2012 data might have been just a singular anormaly in the data.\\
 
-To get a more concrete conclusion, we would need more historical data and also make more predictions based on the obtained model. However, statistically it is undeniable that cubic model will show the best predictions.
+To get a more concrete conclusion, we would need more historical data and also make more predictions based on the obtained model. However, statistically it is undeniable that cubic model will show the best predictions.\\
 
 \end{enumerate}
+\vspace{20px}
 
+\newpage
 \section*{Exercise 3: Analysis of periodic data [20 points]}
+
+The file \textit{temperature.txt} contains the area mean-temperatures of Switzerland between January 1864 and March
+2021 included. Temperature data exhibit a periodic behaviour and we will try to capture it by using periodic models.
+You will need the function \textit{leastSquares()} implemented in Exercise 2. \\
+
+\begin{enumerate}[label=(\alph*)]
+ \item Consider the periodic model ${y_i = \alpha_1 + \alpha_2 cos(2\pi x_i ) + \alpha_3 sin(2\pi x_i )}$ and apply it to the temperature data:
+(I) between January 1960 and January 1963; (II) between January 1960 and January 1970. Write a script
+\textit{periodicA.m} in which you compute the least squares solutions and the metrics of the residual, and plot the
+outputs of the model against the original data in both cases. \\
+
+\begin{lstlisting}[language=Matlab]
+    [x1, y1] = readTemperatureData(filepath, startYear, endYear);
+    x = [ones(length(x1), 1), cos(2 * pi * x1), sin(2 * pi * x1)];
+    [factors, ~, ~, ~] = leastSquares(x, y1);
+    h = height(x1);
+
+    z = factors(1) + 
+        factors(2) * cos(2 * pi * x1(1:h)) + 
+        factors(3) * sin(2 * pi * x1(1:h));
+    generate graphs...
+\end{lstlisting}
+
+The ${temperature.txt}$ file is read in a bit of a different way as the structure of the data is different. It can be seen in ${readTenoeratureData.m}$ file. Then the x-axis data is converted into the periodic model format given in the question. Then the residual vector is calculated using ${leastSquares.m}$ which was completed in the previous question. Then periodic model graph is calculated and graphed along with original data points. The resulting graph is as following: \\
+
+ \begin{figure}[h!]
+    \begin{minipage}[c]{1\linewidth}
+        \centering
+        \includegraphics[width=0.9\linewidth]{./figures/ex3a.png}
+    \end{minipage}
+  \caption{Periodic model of swiss weather 1960 Jan to 1963 Jan (left) and 1960 Jan to 1970 Jan (right)}
+\end{figure}
+
+\newpage
+
+\item Repeat the same analysis and plots of the previous point for both time series, by using the periodic model
+${y_i = \alpha_1 + \alpha_2 cos(2\pi x_i ) + \alpha_3 sin(2\pi x_i ) + \alpha_4 cos(4\pi x_i)}$ in the script \textit{periodicB.m}.
+
+Only things that need to be added are as following:
+
+\begin{lstlisting}[language=Matlab]
+    ...
+    x = [ones(length(x1), 1), cos(2 * pi * x1), 
+         sin(2 * pi * x1), cos(4 * pi * x1)];
+    ...
+    z = factors(1) + 
+        factors(2) * cos(2 * pi * x1(1:h)) + 
+        factors(3) * sin(2 * pi * x1(1:h)) +
+        factors(4) * cos(4 * pi * x1(1:h));
+    ...
+\end{lstlisting}
+
+ \begin{figure}[h!]
+    \begin{minipage}[c]{1\linewidth}
+        \centering
+        \includegraphics[width=0.9\linewidth]{./figures/ex3b.png}
+    \end{minipage}
+  \caption{Periodic model of swiss weather 1960 Jan to 1963 Jan (left) and 1960 Jan to 1970 Jan (right)}
+\end{figure}
+\end{enumerate}
 
 \section*{Exercise 4: Data linearization and Levenberg-Marquardt method for the exponential model [20 points]}
 
