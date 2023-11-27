@@ -518,13 +518,43 @@ Only things that need to be added are as following:
     ...
 \end{lstlisting}
 
+Resulting graph is as following: \\
+
  \begin{figure}[h!]
     \begin{minipage}[c]{1\linewidth}
         \centering
         \includegraphics[width=0.9\linewidth]{./figures/ex3b.png}
     \end{minipage}
-  \caption{Periodic model of swiss weather 1960 Jan to 1963 Jan (left) and 1960 Jan to 1970 Jan (right)}
+  \caption{Periodic model 'B' of swiss weather 1960 Jan to 1963 Jan (left) and 1960 Jan to 1970 Jan (right)}
 \end{figure}
+
+\vspace{10px}
+
+\item Compare the models of point ${(a)}$ and ${(b)}$. Was it beneficial to include more data? Which model would you
+prefer? Are you satisfied with the results obtained? If necessary, what would you suggest to improve your
+models? Motivate your answers. \\
+
+\begin{center}
+\begin{tabular}{|l|r|r|r|r|} \hline
+Model Type & EuclideanNorm & Standard Error & RMSE \\
+\hline
+  Periodic A short  & 10.0838 & 101.6826 & 1.6806\\
+\hline
+  Periodic A long & 18.0011 & 324.0413 & 1.6433\\
+\hline
+  Periodic B short  & 10.0807 & 101.6201 & 1.6801\\
+\hline
+  Periodic B long & 17.8216 & 317.6092 & 1.6269\\
+\hline
+\end{tabular}
+\end{center}
+
+\vspace{20px}
+
+From the graph generated alone, it becomes very obvious that there is barely any difference between the two models. The negligence of 2 model's difference becomes more apprent through the display of quality metrics through a table. Naturally, the necessity to add more data becomes also negligible and almost pointless. Hence, periodic model A will be more preferable as it would be easier to calculate with lower time complexity due to smaller input and residual vector resulting from it. \\
+
+Generally, it seems like periodic models are fitting the original datapoints quite well. However, if there has  To make an improvement to it, maybe values other than ${2\pi}$ can be used with more data to increase accuracy, for example, ${\pi}$.
+
 \end{enumerate}
 
 \section*{Exercise 4: Data linearization and Levenberg-Marquardt method for the exponential model [20 points]}

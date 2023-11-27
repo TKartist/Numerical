@@ -2,12 +2,11 @@
 
 x = [ones(length(x1), 1), cos(2 * pi * x1), sin(2 * pi * x1), cos(4 * pi * x1)];
 
-[factors, ~, ~, ~] = leastSquares(x, y1);
+[factors, ENBS, SEBS, RMSEBS] = leastSquares(x, y1);
 
 h = height(x1);
 
 z = factors(1) + factors(2) * cos(2 * pi * x1(1:h)) + factors(3) * sin(2 * pi * x1(1:h)) + factors(4) * cos(4 * pi * x1(1:h));
-% z = factors(1) + factors(2) * cos(2 * pi * x1(1:h)) + factors(3) * sin(2 * pi * x1(1:h));
 disp(factors(3) * sin(2 * pi * x1(1:h)));
 
 subplot(1, 2, 1);
@@ -25,7 +24,7 @@ hold off;
 
 xL = [ones(length(x2), 1), cos(2 * pi * x2), sin(2 * pi * x2), cos(4 * pi * x2)];
 
-[factorsL, ~, ~, ~] = leastSquares(xL, y2);
+[factorsL, ENBL, SEBL, RMSEBL] = leastSquares(xL, y2);
 
 h2 = height(x2);
 
