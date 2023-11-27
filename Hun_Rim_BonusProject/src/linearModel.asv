@@ -1,0 +1,29 @@
+[year, production, ~] = readData("../data/crudeOil.txt");
+
+duration = 2012 - 1980 + 1;
+[x, y, z] = getLinearModel(year, production, duration);
+
+subplot(1, 2, 1)
+scatter(year(1:duration), y, 'o', 'DisplayName', 'Data');
+hold on;
+plot(year(1:duration), z);
+xlabel('year');
+ylabel('production');
+legend('Origin', 'Linear Model');
+legend('Location', 'southoutside', 'Orientation', 'horizontal');
+title('Crude Oil');
+hold off;
+
+[~, productionK, ~] = readData("../data/kerosene.txt");
+[~, yK, zK] = getLinearModel(year, productionK, duration);
+
+subplot(1, 2, 1)
+scatter(year(1:duration), yK, 'o', 'DisplayName', 'Data');
+hold on;
+plot(year(1:duration), zK);
+xlabel('year');
+ylabel('production');
+legend('Origin', 'Linear Model');
+legend('Location', 'southoutside', 'Orientation', 'horizontal');
+title('Crude Oil');
+hold off;

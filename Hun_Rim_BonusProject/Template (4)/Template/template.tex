@@ -14,7 +14,7 @@
 \setassignment
 \setduedate{Wednesday, 22 November 2023, 11:59 PM}
 
-\serieheader{Numerical Computing}{2023}{\textbf{Student:} FULL NAME}{\textbf{Discussed with:} FULL NAME}{Bonus assignment}{}
+\serieheader{Numerical Computing}{2023}{\textbf{Student:} Hun Rim}{\textbf{Discussed with:} FULL NAME}{Bonus assignment}{}
 \newline
 
 \assignmentpolicy
@@ -279,7 +279,71 @@ and the resulting ${x^*}$ will be
 \section*{Exercise 2: Polynomials models for least squares [20 points]}
 
 \begin{enumerate}[label=(\alph*)]
- \item Write ${leastSquare.m}$ function which calculates least squares, euclidean norm, SE and RMSE of a matrix A and vector b, and write a script ${ex2a.m}$ which computes the result of exercise 1.
+ \item Write ${leastSquare.m}$ function which calculates least squares ${x^*}$, euclidean norm, SE and RMSE of a matrix A and vector b, and write a script ${ex2a.m}$ which computes the result of exercise 1.\\
+ 
+  \begin{lstlisting}[language=Matlab]
+  function [x, EuclideanNorm, SE, RMSE] = leastSquares(A, b)
+    x = pinv(A) * b;
+    r = A * x - b;
+    EuclideanNorm = norm(r);
+    SE = EuclideanNorm ^ 2;
+    MSE = SE / length(b);
+    RMSE = sqrt(MSE);
+  end
+ \end{lstlisting}
+ 
+ The code above calculates least squares (${leastSquare.m}$) using matlab library function and Euclidean norm is calculated by using the matlab norm function after calculating the residual vector. Sum of Square Residuals (SE) are calculated by directly squaring the Euclidean norm, and before the Root Mean Squared Error (RMSE) is calculated, the Mean Squared Error is calculated through dividing SE by length of vector b. \\
+ 
+ \begin{lstlisting}[language=Matlab]
+    A_1 = [1, 0; 1, 0; 1, 0];
+    b_1 = [5; 2; 4];
+    A_2 = [1, 1, 0; 0, 1, 1; 1, 2, 1; 1, 0, 1];
+    b_2 = [2; 2; 3; 4];
+
+    [x_1, norm1, SE1, RMSE1] = leastSquares(A_1, b_1);
+    [x_2, norm2, SE2, RMSE2] = leastSquares(A_2, b_2);
+ \end{lstlisting}
+ 
+ This particular code (${ex2a.m}$) defines the values of matrix A and vector b as given in the exercise 1, and it calculates and stores the least squares, Euclidean Norm, SE, RMSE using function in ${leastSquare.m}$ as described above.
+ 
+ \item Consider the linear model ${y_i = \alpha_1 + \alpha_2x_i}$ and apply it to the crude oil and kerosene production data in the
+period 1980-2011. Write a script ${linearModel.m}$ in which you use ${leastSquares()}$ to compute the
+least squares solution ${x^*}$ and the metrics of the residual. For each dataset, create a figure in which you plot the original data points and the linear model. \\
+
+ \begin{lstlisting}[language=Matlab]
+    [year, production, ~] = readData("../data/crudeOil.txt");
+    duration = 2012 - 1980 + 1;
+    
+    % define x and y ...
+    
+    [factors, ~, ~, ~] = leastSquares(x, y);
+    z = zeros(duration);
+    for k = 1:duration
+        z(k) = factors(1) + factors(2) * year(k);
+    end
+    
+    subplot(1, 2, 1);
+    % plot the line and scatter graph...
+    hold off;
+ \end{lstlisting}
+
+\newpage
+
+The code above simply follows the process of reading the data from the file, then converting 'x' and 'y' to viable format of matrix A and vector b, and recaclulating the linear model (line graph) according to the least squares returned and plotting them with the origin (scatter graph). During conversion, columns of the matrix A filled with ${x_i^{columnNumber}}$ (columnNumber starts from 0) and 'y' is placed as vector b. \\
+
+ \begin{figure}[h!]
+    \begin{minipage}[c]{1\linewidth}
+        \centering
+        \includegraphics[width=0.9\linewidth]{./figures/ex2b.png}
+    \end{minipage}
+  \caption{Linear Model and original data of crude oil and kerosene production from 1980 to 2012}
+\end{figure}
+
+\item Consider the quadratic model ${y_i = \alpha_1 + \alpha_2x_i + \alpha_3x^2_i}$ and apply it to the crude oil and kerosene production
+data in the period 1980-2011. Write a script \textit{quadraticModel.m} in which you use \textit{leastSquares()} to
+compute the least squares solution ${x^*}$ and the metrics of the residual. For each dataset, create a figure in which
+you plot the original data points and the quadratic model.
+
 \end{enumerate}
 
 

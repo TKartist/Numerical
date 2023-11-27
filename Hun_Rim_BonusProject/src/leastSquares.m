@@ -1,5 +1,5 @@
 function [x, EuclideanNorm, SE, RMSE] = leastSquares(A, b)
-    x = lsqr(A, b);
+    x = pinv(A) * b;
     r = A * x - b;
     EuclideanNorm = norm(r);
     SE = EuclideanNorm ^ 2;
