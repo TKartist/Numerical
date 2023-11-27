@@ -6,10 +6,10 @@ y = str2double(production);
 
 x = [ones(duration, 1), year(1:duration), year(1:duration).^2, year(1:duration).^3];
 
-[factors, ENCC, SECC, RMSECC] = leastSquares(x, y(1:duration));
+[factors, ~, ~, ~] = leastSquares(x, y(1:duration));
 
 z = factors(1) + factors(2) * year(1:duration) + factors(3) * year(1:duration).^2 + factors(4) * year(1:duration).^3;
-cubicCrudePrediction = factors(1) + factors(2) * 2012 + factors(3) * 2012 * 2012 + factors(4) * (2012^3);
+cubicCrudeModel = 
 subplot(1, 2, 1);
 scatter(year(1:duration), y(1:duration), 'x', 'DisplayName', 'Data');
 hold on;
@@ -26,10 +26,10 @@ yK = productionK(1:duration);
 
 xK = [ones(duration, 1), year(1:duration), year(1:duration).^2, year(1:duration).^3];
 
-[factorsK, ENCK, SECK, RMCK] = leastSquares(xK, yK);
+[factorsK, ~, ~, ~] = leastSquares(xK, yK);
 
 zK = factorsK(1) + factorsK(2) * year(1:duration) + factorsK(3) * year(1:duration).^2 + factorsK(4) * year(1:duration).^3;
-cubicKeroPrediction = factorsK(1) + factorsK(2) * 2012 + factorsK(3) * (2012^2) + factorsK(4) * (2012^3);
+
 
 subplot(1, 2, 2)
 scatter(year(1:duration), yK, 'x', 'DisplayName', 'Quadratic Fit');

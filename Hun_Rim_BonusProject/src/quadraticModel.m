@@ -6,9 +6,10 @@ y = str2double(production);
 
 x = [ones(duration, 1), year(1:duration), year(1:duration).^2];
 
-[factors, ~, ~, ~] = leastSquares(x, y(1:duration));
+[factors, ENQC, SEQC, RMSEQC] = leastSquares(x, y(1:duration));
 
 z = factors(1) + factors(2) * year(1:duration) + factors(3) * year(1:duration).^2;
+quadCrudePrediction = factors(1) + factors(2) * 2012 + factors(3) * 2012 * 2012;
 
 subplot(1, 2, 1);
 scatter(year(1:duration), y(1:duration), 'x', 'DisplayName', 'Data');
@@ -18,7 +19,7 @@ xlabel('Year');
 ylabel('Production');
 legend('Origin', 'Quadratic Model');
 legend('Location', 'southoutside', 'Orientation', 'horizontal');
-title('Crude Oil Production 1980 - 2012');
+title('Crude Oil Production 1980 - 2011');
 hold off;
 
 [~, productionK, ~] = readData("../data/kerosene.txt");
@@ -26,9 +27,10 @@ yK = productionK(1:duration);
 
 xK = [ones(duration, 1), year(1:duration), year(1:duration).^2];
 
-[factorsK, ~, ~, ~] = leastSquares(xK, yK);
+[factorsK, ENQK, SEQK, RMSEQK] = leastSquares(xK, yK);
 
 zK = factorsK(1) + factorsK(2) * year(1:duration) + factorsK(3) * year(1:duration).^2;
+quadKeroPrediction = factorsK(1) + factorsK(2) * 2012 + factorsK(3) * 2012 * 2012;
 
 
 subplot(1, 2, 2)
@@ -39,5 +41,5 @@ xlabel('year');
 ylabel('production');
 legend('Origin', 'Quadratic Model');
 legend('Location', 'southoutside', 'Orientation', 'horizontal');
-title('Kerosene Production 1980 - 2012');
+title('Kerosene Production 1980 - 2011');
 hold off;

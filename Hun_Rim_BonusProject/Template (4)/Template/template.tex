@@ -82,7 +82,7 @@ Least Square solution ${x^*}$ can be obtained by solving the following equation:
 
 \vspace{20px}
 
-Then from the ${x^*}$ obtained, we can get the residual vector as following and from it, we can calculate the Euclidean norm and proceed to SE (Sum of Square Residuals) and RMSE (Root Mean Squared Error):
+Then from the ${x^*}$ obtained, we can get the residual vector as following and from it, we can calculate the Euclidean norm and proceed to SE (Standard Error) and RMSE (Root Mean Squared Error):
 
 \vspace{20px}
 
@@ -292,7 +292,7 @@ and the resulting ${x^*}$ will be
   end
  \end{lstlisting}
  
- The code above calculates least squares (${leastSquare.m}$) using matlab library function and Euclidean norm is calculated by using the matlab norm function after calculating the residual vector. Sum of Square Residuals (SE) are calculated by directly squaring the Euclidean norm, and before the Root Mean Squared Error (RMSE) is calculated, the Mean Squared Error is calculated through dividing SE by length of vector b. \\
+ The code above calculates least squares (${leastSquare.m}$) using matlab library function and Euclidean norm is calculated by using the matlab norm function after calculating the residual vector. Standard Errors (SE) are calculated by directly squaring the Euclidean norm, and before the Root Mean Squared Error (RMSE) is calculated, the Mean Squared Error is calculated through dividing SE by length of vector b. \\
  
  \begin{lstlisting}[language=Matlab]
     A_1 = [1, 0; 1, 0; 1, 0];
@@ -368,7 +368,6 @@ The general flow of the logic is very similar, but the matrix A is extended via 
     z = factors(1) + factors(2) * year(:) + factors(3) * year(:).^2;
     same as before ...
  \end{lstlisting}
- \vspace{20px}
  As a result of that change, resulting graph (quadratic) became more fitting than the previous linear graph shown in figure 1.
  \vspace{20px}
  \begin{figure}[h!]
@@ -378,7 +377,6 @@ The general flow of the logic is very similar, but the matrix A is extended via 
     \end{minipage}
   \caption{Quadratic Model and original data of crude oil and kerosene production from 1980 to 2011}
 \end{figure}
-\vspace{20px}
 
 \item Consider the cubic model ${y_i = \alpha_1 + \alpha_2 x_i + \alpha_3 x^2_i + \alpha_4 x^3_i}$ and apply it to the crude oil and kerosene production
 data in the period 1980-2011. Write a script \textit{cubicModel.m} in which you use \textit{leastSquares()} to com-
@@ -416,11 +414,49 @@ Finally, the resultant graph would be more fitted to the original data points th
 \end{figure}
 \vspace{20px}
 
+\item Compare the linear, quadratic and cubic models on the basis of the quality metrics computed above, by creating
+a table containing the results for the two models. Which one of the three models would you pick for the crude
+oil data? And for the kerosene? Provide an estimate of the crude oil and kerosene production in 2012 by using
+the three models and compare the values obtained with the real values reported in the data source. Comment on
+your results. \\
 
+\begin{center}
+\begin{tabular}{|l|r|r|r|r|} \hline
+Model Type & EuclideanNorm & Standard Error & RMSE \\
+\hline
+  Linear Crude  & 11,471 & 131,590,000 & 2,027.8\\
+\hline
+  Quadratic Crude & 9,582.6 & 91,827,000 & 1,694\\
+\hline
+  Cubic Crude & 7,917.9 & 62,692,000 & 1,399.7 \\
+  \hline
+  Linear Kerosene & 151.0222 & 22,808 & 26.6972\\
+\hline
+  Quadratic Kerosene & 145.3013 & 21,112 & 25.6859\\
+\hline
+  Cubic Kerosene & 138.476 & 19,175 & 24.4793 \\
+  \hline
+\end{tabular}
+\end{center}
+\newpage
+\begin{tabular}{|l|r|r|r|r|} \hline
+Energy Type & Linear Estimation & Quadratic Estimation & Cubic Estimation & Real Data \\
+\hline
+ Crude Oil & 17,082(30.3\%) & 14,344(+9.4\%) & 11,473 (-12.5\%) & 13,111\\
+\hline
+Kerosene & 207.2856(-23.6\%) & 225.1621 (-16.9\%) & 248.4740 (-7.3\%) & 267.89\\
+\hline
+\end{tabular}
+
+To make a simple analysis, having a smaller Euclidean Norm suggests better fit of the model to the original data as smaller euclidean norm indicates smaller residuals, and naturally bigger would indicate the opposite. Similarly, Standard Error (SE) and Root Mean Squared Error (RMSE) indicates better fit of the model when they are small. \\
+
+Under this assumption, the data on the table suggests for all the cases, cubic model is the best, quadratic model is the second, and linear model is the worst model to fit the original data. \\
+
+However, the prediction made for 2012 from these models suggest, even though cubic model proved to be the best for kerosene production trend prediction, in terms of prediction for crude oil production, quadratic model showed more accurate result. However, prediction of a singular value is not enough to make a conclusion that quadratic model will always perform better for kerosene production prediction or cubic model will always perform better for crude oil production prediction as the 2012 data might have been just a singular anormaly in the data.\\
+
+To get a more concrete conclusion, we would need more historical data and also make more predictions based on the obtained model. However, statistically it is undeniable that cubic model will show the best predictions.
 
 \end{enumerate}
-
-
 
 \section*{Exercise 3: Analysis of periodic data [20 points]}
 
