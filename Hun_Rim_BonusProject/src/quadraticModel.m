@@ -1,54 +1,35 @@
 [year, production, ~] = readData("../data/crudeOil.txt");
 
-duration = 2012 - 1980 + 1;
+duration = 2011 - 1980 + 1;
 
-% Extract numeric values from production
 y = str2double(production);
 
-% Create the design matrix X with quadratic terms
-x = [ones(duration, 1), year(:), year(:).^2];
+x = [ones(duration, 1), year(1:duration), year(1:duration).^2];
 
-% Calculate least squares solution
-[factors, ~, ~, ~] = leastSquares(x, y);
+[factors, ~, ~, ~] = leastSquares(x, y(1:duration));
 
-% Evaluate the quadratic model for the given years
-z = factors(1) + factors(2) * year(:) + factors(3) * year(:).^2;
+z = factors(1) + factors(2) * year(1:duration) + factors(3) * year(1:duration).^2;
 
-% Display the differences
-for k = 2:duration
-    disp(z(k) - z(k - 1));
-end
-
-% Plot the data and the quadratic model
 subplot(1, 2, 1);
-scatter(year, y, 'x', 'DisplayName', 'Data');
+scatter(year(1:duration), y(1:duration), 'x', 'DisplayName', 'Data');
 hold on;
-plot(year, z, 'r', 'DisplayName', 'Quadratic Model');
+plot(year(1:duration), z(1:duration), 'r', 'DisplayName', 'Quadratic Model');
 xlabel('Year');
 ylabel('Production');
+legend('Origin', 'Quadratic Model');
 legend('Location', 'southoutside', 'Orientation', 'horizontal');
 title('Crude Oil Production 1980 - 2012');
 hold off;
 
 [~, productionK, ~] = readData("../data/kerosene.txt");
-% [~, yK, zK] = getLinearModel(year, productionK, duration);
-yK = zeros(duration, 1);
-for i = 1:duration
-    yK(i) = productionK(i);
-end
-xK = ones(duration, 3);
+yK = productionK(1:duration);
 
-for j = 1:duration
-    xK(j, 3) = year(j) * year(j);
-    xK(j, 2) = year(j);
-end
+xK = [ones(duration, 1), year(1:duration), year(1:duration).^2];
 
 [factorsK, ~, ~, ~] = leastSquares(xK, yK);
 
-zK = zeros(duration, 1);
-for k = 1:duration
-    zK(k) = factorsK(1) + (factorsK(2) * year(k)) + (factorsK(3) * year(k)^2);
-end
+zK = factorsK(1) + factorsK(2) * year(1:duration) + factorsK(3) * year(1:duration).^2;
+
 
 subplot(1, 2, 2)
 scatter(year(1:duration), yK, 'x', 'DisplayName', 'Quadratic Fit');
@@ -56,7 +37,7 @@ hold on;
 plot(year(1:duration), zK);
 xlabel('year');
 ylabel('production');
-legend('Origin', 'Cubic Model');
+legend('Origin', 'Quadratic Model');
 legend('Location', 'southoutside', 'Orientation', 'horizontal');
 title('Kerosene Production 1980 - 2012');
 hold off;
