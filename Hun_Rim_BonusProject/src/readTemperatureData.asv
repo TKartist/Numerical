@@ -1,0 +1,15 @@
+function [] = readTemperatureData(filepath, s, e)
+    data = readtable(filepath, 'NumHeaderLines', 16);
+    year = data.Var1;
+    temperatures = [data.Var2, data.Var3, data.Var4, data.Var5, data.Var6, data.Var7, data.Var8, data.Var9, data.Var10, data.Var11, data.Var12, data.Var13];
+    x = zeros((e - s) * 12, 1);
+    y = zeros((e - s) * 12, 1);
+    for i = 1:height(data)
+        if year(i) >= s
+            for j = 1 : 12
+                y((i - 1) * 12 + j) = temperatures(i, j);
+                x((i - 1) * 12 + j) = year(i) + (1 / 12 * j);
+            end
+        end
+    end
+end
