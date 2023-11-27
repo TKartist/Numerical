@@ -10,7 +10,7 @@ function [x, y] = readTemperatureData(filepath, s, e)
         if year(i) >= s
             for j = 1 : 12
                 y(count * 12 + j, 1) = temperatures(i, j);
-                x(count * 12 + j, 1) = year(i) + (1 / 12 * (j - 1));
+                x(count * 12 + j, 1) = year(i) + (1 / 12 * (j - 1)) - s;
             end
             count = count + 1;
         end
