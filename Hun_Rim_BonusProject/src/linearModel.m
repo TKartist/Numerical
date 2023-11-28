@@ -2,6 +2,8 @@
 
 duration = 2011 - 1980 + 1;
 
+year = year - 1980;
+
 y = str2double(production);
 
 x = [ones(duration, 1), year(1:duration)];
