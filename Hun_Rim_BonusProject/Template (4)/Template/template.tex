@@ -562,9 +562,9 @@ Generally, it seems like periodic models are fitting the original datapoints qui
 The file \textit{nuclear.txt} contains the data on the nuclear electric power consumption by year in China in the period
 1999-2006. We consider the power law model, expressed as: \\
 
-\begin{equation*}
+\begin{equation}
 y_i = \alpha_ix_i^{\alpha_2}
-\end{equation*}
+\end{equation}
 
 \vspace{20px}
 
@@ -572,6 +572,28 @@ y_i = \alpha_ix_i^{\alpha_2}
  \item Find the least squares best fit by using data linearization and compute the RMSE both of the log-linearized
 model and of the original exponential model. Include in your report all the computations and the necessary
 steps, as explained in the slides of the tutorial. \\
+
+Log-Linearization can be done using the power law model shown in the beginning of the question. To convert it into linear function, ${ln()}$ can be applied to both of the sides, then due to the properties of logarithms, the power law model can be expressed as following: \\
+
+\begin{equation}
+ ln(y_i) = ln(\alpha_1) + \alpha_2 ln(x_i)
+\end{equation}
+
+For original exponential model, it can be expressed as the following: \\
+
+\begin{equation}
+ y_i = \alpha_ie^{\alpha_2x_i}
+\end{equation}
+
+Which then can be converted applying ${ln()}$ to both sides again and get the following linear expression: \\
+
+\begin{equation}
+ ln(y_i) = ln(\alpha_1) + \alpha_2x_i
+\end{equation}
+
+Equation 8 and 10 can be used to build the original exponential model and the log-linearization model using the previously defined ${leastSquare}$ function. Important factor to remember during the implementation would be that the calculated result of the model would be equivalent to ${ln(y_i)}$ not the ${y_i}$, hence, the result would have to be used as the power of ${e}$ and not be graphed directly in relation to the original data. \\
+
+\newpage
 
 \begin{lstlisting}[language=Matlab]
     % Getting x = year and y = consumption data.
@@ -587,11 +609,11 @@ steps, as explained in the slides of the tutorial. \\
     
     % Create a coefficient matrix with 1s and log form of x values to  
     % pas it onto the leastSquare calculation to get 2d residual 
-    % vector (alphas) for log-linearization
+    % vector (alphas) according to eq8
     X = [ones(h, 1), logX];
     
     % Call least square function with predefined matrix and log form of Y
-    % to obtain residual vectors = factors and RMSE for this model
+    % to obtain residual vectors (factors) and RMSE for this model
     [factors, ~, ~, rmse_log] = leastSquares(X, logY);
     
     % Calculate the log-linearization model fitting the given data
@@ -650,7 +672,7 @@ The full script can be viewed at ${logModel.m}$ in \textit{src} folder.
   \caption{Original exponential model and Log-linearization model with original data of Chinese electricity consumption between 1999 to 2006}
 \end{figure}
 
-\newpage
+\vspace{20px}
 
 \item Write a function \textit{levenbergMarquardt()} in which you implement the Levenberg-Marquardt algorithm for
 solving nonlinear least squares problems. Following again the slides of the tutorial, show how you can formulate
