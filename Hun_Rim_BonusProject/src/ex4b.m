@@ -1,58 +1,56 @@
-[years, consumption, change] = readData('../data/nuclear.txt');
+[year, consumption, change] = readData('../data/nuclear.txt');
 
-X = log(years - min(years) + 1); % Shift years to start from 1
-Y = log(consumption);
+xaxis = year - min(year) + 1;
+logX = log(xaxis);
+logY = log(consumption);
+
+h = height(logX);
+
+X = [ones(h, 1), logX];
+
+[factors, ~, ~, ~] = leastSquares(X, logY);
+
+z = exp(factors(1) + factors(2) * logX); % log-linearization model points
+rmse_log = sqrt(sum((z - consumption).^2) / length(xaxis));
+
+fprintf('Coefficients (Log-Linearization Model):\n');
+fprintf('Alpha_1: %.4f\n', factors(1));
+fprintf('Alpha_2: %.4f\n', factors(2));
+
+logYO = log(consumption);
+
+hO = height(xaxis);
+XO = [ones(hO, 1), xaxis];
+
+[factorsO, ~, ~, ~] = leastSquares(XO, logYO);
 
 
-p = polyfit(X, Y, 1);
+fprintf('Coefficients (Original Exponential Model):\n');
+fprintf('Alpha_1: %.4f\n', factorsO(1));
+fprintf('Alpha_2: %.4f\n', factorsO(2));
 
+zO = exp(factorsO(1) + factorsO(2) * xaxis); % original exponential model points
+rmse_original = sqrt(sum((zO - consumption).^2) / length(xaxis));
 
-y_pred_linearized = polyval(p, X);
+fprintf('RMSE (Log-Linearized Model): %.4f\n', rmse_log);
+fprintf('RMSE (Original Exponential Model): %.4f\n', rmse_original);
 
+[alphas, residuals, rmse_nonlinear, exitFlag] = levenbergMarquardt(xaxis, consumption, [1; 1], 1000, 0.5, 1);
+fprintf('RMSE (Non-Linear Model): %.4f\n', rmse_nonlinear);
+zNL = alphas(1) * xaxis.^alphas(2); % non-linear model points
 
-RMSE_linearized = sqrt(mean((Y - y_pred_linearized).^2));
-
-alpha_1 = exp(p(2));
-alpha_2 = p(1);
-y_pred_exp = alpha_1 * exp(alpha_2 * X);
-
-RMSE_exp = sqrt(mean((consumption - y_pred_exp).^2));
-
-
-fprintf('Parameters of the original model: alpha_1 = %f, alpha_2 = %f\n', alpha_1, alpha_2);
-fprintf('RMSE for the log-linearized model: %f\n', RMSE_linearized);
-fprintf('RMSE for the original model: %f\n', RMSE_exp);
-
-
-model = @(p, x) p(1) * x.^p(2);
-
-% Set initial guess for the parameters
-initial_guess = [1, 1]; % Adjust based on your understanding
-
-% Perform the nonlinear curve-fitting using lsqcurvefit
-[fitted_params, resnorm, residual, exitflag, output] = lsqcurvefit(model, initial_guess, X, Y);
-
-% Check the exitflag to ensure convergence
-if exitflag <= 0
-    disp('Nonlinear curve-fitting did not converge. The output information is:');
-    disp(output);
+if exitFlag == 0
+    fprintf("Did Not Converge Fully");
 end
 
-y_pred_nonlinear = model(fitted_params, X);
-
-% Calculate RMSE for the nonlinear model
-RMSE_nonlinear = sqrt(mean((Y - log(y_pred_nonlinear)).^2));
-
-
-fprintf('RMSE for the nonlinear model: %f\n', RMSE_nonlinear);
-
-
-figure;
-plot(years, consumption, 'o', 'DisplayName', 'Original Data');
+scatter(xaxis, consumption, 'x', 'DisplayName', 'Original Points');
 hold on;
-plot(years, exp(y_pred_linearized), 'r-', 'DisplayName', 'Linearized Model');
-plot(years, exp(y_pred_nonlinear), 'b--', 'DisplayName', 'Nonlinear Model');
-legend;
-xlabel('Year');
-ylabel('Consumption');
-title('Model Comparison');
+plot(xaxis, zO, 'r-', 'DisplayName', 'Original Exponential Model');
+plot(xaxis, z, 'b--', 'DisplayName', 'Log-Linearization Model');
+plot(xaxis, zNL, 'g-', 'DisplayName', 'Non-Linear Model');
+xlabel('year');
+ylabel('consumption');
+legend('Original Points', 'Original Exponential Model', 'Log-Linearization Model', 'Non-Linear Model');
+legend('Location', 'southoutside', 'Orientation','horizontal');
+title('Chinese Energy Consumption between 1999 to 2006');
+hold off;

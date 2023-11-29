@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2023.10.6)  27 NOV 2023 23:24
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2023.10.6)  29 NOV 2023 02:30
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -632,41 +632,174 @@ Underfull \hbox (badness 10000) in paragraph at lines 462--463
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 468--471
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 473--477
-
- []
-
 [8]
-Underfull \hbox (badness 10000) in paragraph at lines 491--492
+Underfull \hbox (badness 10000) in paragraph at lines 470--473
 
  []
 
-<./figures/ex3a.png, id=151, 1311.09825pt x 701.019pt>
+
+Underfull \hbox (badness 10000) in paragraph at lines 475--479
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 492--493
+
+ []
+
+<./figures/ex3a.png, id=139, 1311.09825pt x 701.019pt>
 File: ./figures/ex3a.png Graphic file (type png)
 <use ./figures/ex3a.png>
-Package pdftex.def Info: ./figures/ex3a.png  used on input line 496.
+Package pdftex.def Info: ./figures/ex3a.png  used on input line 497.
 (pdftex.def)             Requested size: 422.52054pt x 225.91377pt.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 509.
 [9 <./figures/ex3a.png>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 509.
+Underfull \hbox (badness 10000) in paragraph at lines 521--522
+
+ []
+
+<./figures/ex3b.png, id=158, 1602.98875pt x 952.55875pt>
+File: ./figures/ex3b.png Graphic file (type png)
+<use ./figures/ex3b.png>
+Package pdftex.def Info: ./figures/ex3b.png  used on input line 526.
+(pdftex.def)             Requested size: 422.52054pt x 251.07512pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 533--536
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 554--555
+
+ []
+
+[10 <./figures/ex3b.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 562--564
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 572--575
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 576--577
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 582--583
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 588--589
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 594--595
+
+ []
+
+[11]
+Overfull \hbox (11.23932pt too wide) in paragraph at lines 610--611
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (37.51959pt too wide) in paragraph at lines 615--616
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (11.23932pt too wide) in paragraph at lines 622--623
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (24.37946pt too wide) in paragraph at lines 635--636
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (17.80939pt too wide) in paragraph at lines 640--641
+[][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (17.80939pt too wide) in paragraph at lines 643--644
+[][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+[12]
+<./figures/ex4a.png, id=243, 1571.8725pt x 982.67125pt>
+File: ./figures/ex4a.png Graphic file (type png)
+<use ./figures/ex4a.png>
+Package pdftex.def Info: ./figures/ex4a.png  used on input line 668.
+(pdftex.def)             Requested size: 422.52054pt x 264.14023pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 675--680
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 681--682
+
+ []
+
+LaTeX Font Info:    Trying to load font information for OML+cmr on input line 6
+90.
+(/usr/share/texlive/texmf-dist/tex/latex/base/omlcmr.fd
+File: omlcmr.fd 2019/12/16 v2.5j Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OML/cmr/m/n' in size <10.95> not available
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 690.
+
+Underfull \hbox (badness 10000) in paragraph at lines 697--698
+
+ []
+
+[13 <./figures/ex4a.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 709--710
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 719--720
+
+ []
+
+<./figures/ex4b.png, id=265, 1586.92876pt x 963.6pt>
+File: ./figures/ex4b.png Graphic file (type png)
+<use ./figures/ex4b.png>
+Package pdftex.def Info: ./figures/ex4b.png  used on input line 724.
+(pdftex.def)             Requested size: 422.52054pt x 256.55846pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 729--730
+
+ []
+
+[14 <./figures/ex4b.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 733--735
+
+ []
+
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 757.
+[15]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 757.
  (./template.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 509.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 509.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 757.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 757.
 Package rerunfilecheck Info: File `template.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 509.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 757.
  ) 
 Here is how much of TeX's memory you used:
- 14682 strings out of 481239
- 228500 string characters out of 5920377
- 775348 words of memory out of 5000000
- 29693 multiletter control sequences out of 15000+600000
+ 14850 strings out of 481239
+ 230790 string characters out of 5920377
+ 796348 words of memory out of 5000000
+ 29761 multiletter control sequences out of 15000+600000
  538849 words of font info for 46 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  45i,10n,60p,10123b,1980s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -675,18 +808,20 @@ ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/tex
 mf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dis
 t/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/font
 s/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type
-1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
-c/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfo
-nts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
-cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10
-.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><
-/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/sh
-are/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/te
-xmf/fonts/type1/public/cm-super/sfrm1095.pfb>
-Output written on template.pdf (9 pages, 421373 bytes).
+1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
+c/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfo
+nts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
+cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pf
+b></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/
+share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/shar
+e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texl
+ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texmf/fonts/type1
+/public/cm-super/sfrm1095.pfb>
+Output written on template.pdf (15 pages, 547226 bytes).
 PDF statistics:
- 225 PDF objects out of 1000 (max. 8388607)
- 189 compressed objects within 2 object streams
- 102 named destinations out of 1000 (max. 500000)
- 26 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 373 PDF objects out of 1000 (max. 8388607)
+ 321 compressed objects within 4 object streams
+ 196 named destinations out of 1000 (max. 500000)
+ 41 words of extra memory for PDF output out of 10000 (max. 10000000)
 

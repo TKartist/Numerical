@@ -1,4 +1,4 @@
-function [estimated, residuals, rmse, exitFlag, J] = levenbergMarquardt(X, Y, initialGuess, maxIterations, tolerance, lambda)
+function [estimated, residuals, rmse, exitFlag] = levenbergMarquardt(X, Y, initialGuess, maxIterations, tolerance, lambda)
     estimated = initialGuess;
     for i = 1 : maxIterations
         residuals = modelFunction(estimated, X) - Y;
@@ -15,13 +15,6 @@ function [estimated, residuals, rmse, exitFlag, J] = levenbergMarquardt(X, Y, in
             exitFlag = 1;
             return;
         end
-
-        if sum(delta.^2) > tolerance
-            lambda = lambda * 10;
-        else
-            lambda = lambda / 10;
-        end
-        disp(i);
     end
 
     exitFlag = 0;
@@ -31,9 +24,9 @@ function residuals = modelFunction(estimated, X)
     residuals = estimated(1) * X.^estimated(2);
 end
 
-function J = jacobianMatrix(parameters, x)
+function J = jacobianMatrix(estimated, X)
     J = [];
-    for i = 1 : height(x)
-        J = [J; x(i).^parameters(2), parameters(1) * x(i)^parameters(2) * log(x(i))];
+    for i = 1 : height(X)
+        J = [J; X(i).^estimated(2), estimated(1) * X(i)^estimated(2) * log(X(i))];
     end
 end

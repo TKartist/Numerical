@@ -14,7 +14,7 @@
 \setassignment
 \setduedate{Wednesday, 22 November 2023, 11:59 PM}
 
-\serieheader{Numerical Computing}{2023}{\textbf{Student:} Hun Rim}{\textbf{Discussed with:} FULL NAME}{Bonus assignment}{}
+\serieheader{Numerical Computing}{2023}{\textbf{Student:} Hun Rim}{\textbf{Discussed with:} Georgy Batyrev}{Bonus assignment}{}
 \newline
 
 \assignmentpolicy
@@ -647,13 +647,13 @@ Equation 8 and 10 can be used to build the original exponential model and the lo
     ... print the residual vector and the rmse of the model ...
 \end{lstlisting}
 
-The full script can be viewed at ${logModel.m}$ in \textit{src} folder. 
+The full script can be viewed at ${ex4b.m}$ in \textit{src} folder. 
 
 \begin{center}
 \begin{tabular}{|l|r|r|} \hline
   & Original Exponential Model & Log-Linearization Model \\
 \hline
-  RMSE & 0.1447  & 0.2042 \\
+  RMSE & 5.4672  & 5.0953 \\
 \hline
   ${\alpha_1}$ & 2.3554 & 2.3705 \\
 \hline
@@ -661,8 +661,6 @@ The full script can be viewed at ${logModel.m}$ in \textit{src} folder.
 \hline
 \end{tabular}
 \end{center}
-
-\vspace{20px}
 
  \begin{figure}[h!]
     \begin{minipage}[c]{1\linewidth}
@@ -678,12 +676,83 @@ The full script can be viewed at ${logModel.m}$ in \textit{src} folder.
 solving nonlinear least squares problems. Following again the slides of the tutorial, show how you can formulate
 the problem in order to solve it with Levenberg-Marquardt method and compute analytically all the necessary
 quantities. Finally, write a script \textit{ex4b.m} in which you use the function \textit{levenbergMarquardt()} to fit
-the data points and compute the RMSE.
+the data points and compute the RMSE. \\
+
+Logic behind the Levenberg Marquardt algorithm is an alteration on Gauss-Newton method using ${\lambda}$ (Gaussian-Newton method is equivalent to Levenberg Marquardt algorithm when ${\lambda = 0}$). The difference is that this algorithm tackles eventual ill-conditioning of Jacobian matrix by introducing a regularization. \\
+
+\begin{lstlisting}
+Given a random initial guess x^0 and lambda
+    for i = 0, 1, 2, . . . do
+        A = Jr(x(i))
+        v(i) = (-1) * (A^T * A + lambda * diag(A^T * A))^(-1)
+                * A^T * r(x(i))
+        x(i+1) = x(i) + v(i)
+        if (norm(v(i)) < tolerance) {
+            return 1; // exit with success
+        }
+    end for
+    return 0; exit with failure
+\end{lstlisting}
+
+Important aspect of implementing this algorithm is the definition of Jacobian matrix and calculation of residuals ${(r(x_i))}$. Jacobian matrix can be expressed as following for the power law model which is our basis equation: \\
+
+\begin{equation}
+ J_r(\alpha_1, \alpha_2) = \begin{bmatrix}
+            x_1^{\alpha_2} & \alpha_1x_1^{\alpha_2}log(x_1) \\
+            ... & ... \\
+            x_i^{\alpha_2} & \alpha_1x_i^{\alpha_2}log(x_i) \\
+       \end{bmatrix}
+\end{equation}
+
+\vspace{20px}
+
+Residual calculation can be expressed as following for the power law model: \\
+
+\begin{equation}
+ r(\alpha_1, \alpha_2) = \begin{bmatrix}
+            \alpha_1 x_1^{\alpha_2} - y_1\\
+            ... \\
+            \alpha_1 x_i^{\alpha_2} - y_i\\
+       \end{bmatrix}
+\end{equation}
+
+With these factors in mind, the \textit{levenbergMarquardt()} is implemented in \textit{levenbergMarquardt.m} script and resultant graph is plotted with other least squares best fit model graphs. The result is as following: \\
+
+ \begin{figure}[h!]
+    \begin{minipage}[c]{1\linewidth}
+        \centering
+        \includegraphics[width=0.9\linewidth]{./figures/ex4b.png}
+    \end{minipage}
+  \caption{Original exponential model and Log-linearization model and non-linear model with original data of Chinese electricity consumption between 1999 to 2006}
+\end{figure}
+
+View the ${ex4b.m}$ to see the implementation of the models. \\
+
+\newpage
+
+\item Compare the results obtained in points (a) and (b), by extending the script ${ex4b.m}$ to produce a plot of the
+original data points together with the two models. Which model would you choose? \\
+
+The root mean square error (RMSE) for Original Exponential Model and Log-Linearization Model were calculated before which were 5.4672 and 5.0953. Newly calculated RMSE for Non-Linear Model using Levenberg Marquardt is 4.2394. Like explained before, lower RMSE indicates better fit, hence, out of 3 models Non-Linear Model has the best fit to the original data points. Which was also obvious through the graph in figure 7 itself. Naturally, it would be the wisest to choose Non-Linear Model to predict the data in this scenario.
 
 \end{enumerate}
 
 
 \section*{Exercise 5: Tikhonov regularization [15 points]}
+Given the ill-posed problem ${Ax = b}$, with ${A \in R^{n\times m}}$ and ${b \in R^m}$, we aim to solve it using linear
+least squares with Tikhonov regularization, which is formulated as
+
+\begin{equation}
+ min_x \norm{Ax - b}^2 + \alpha \norm{x}^2
+\end{equation}
+
+where ${\alpha \in R}$ is a regularization parameter.
+
+\begin{enumerate}[label=(\alph*)]
+ \item Derive analytically the optimal solution ${x^*}$ of equation13. What is the purpose of the parameter 
+ ${\alpha}$ and how should
+we proceed to choose its value?
+\end{enumerate}
 
 
 
