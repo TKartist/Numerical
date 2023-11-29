@@ -704,7 +704,7 @@ Important aspect of implementing this algorithm is the definition of Jacobian ma
        \end{bmatrix}
 \end{equation}
 
-\vspace{20px}
+\vspace{5px}
 
 Residual calculation can be expressed as following for the power law model: \\
 
@@ -726,9 +726,19 @@ With these factors in mind, the \textit{levenbergMarquardt()} is implemented in 
   \caption{Original exponential model and Log-linearization model and non-linear model with original data of Chinese electricity consumption between 1999 to 2006}
 \end{figure}
 
-View the ${ex4b.m}$ to see the implementation of the models. \\
+For calculation of non-linear model, there are various parameters that needs to be passed.\\
 
-\newpage
+\begin{lstlisting}
+ function [estimatedAlphas, residuals, rmse, exitFlag] = 
+ levenbergMarquardt(X, Y, initialGuess, maxIterations, tolerance, lambda)
+ % X -> Original X-axis vector
+ % Y -> Original Y-axis vector
+ % initialGuess -> Intuition based initial value of alphas
+ % maxIterations -> Iteration limit
+ % tolerance -> epsilon value
+ % lambda -> regularization term
+\end{lstlisting}
+
 
 \item Compare the results obtained in points (a) and (b), by extending the script ${ex4b.m}$ to produce a plot of the
 original data points together with the two models. Which model would you choose? \\
@@ -751,9 +761,87 @@ where ${\alpha \in R}$ is a regularization parameter.
 \begin{enumerate}[label=(\alph*)]
  \item Derive analytically the optimal solution ${x^*}$ of equation13. What is the purpose of the parameter 
  ${\alpha}$ and how should
-we proceed to choose its value?
-\end{enumerate}
+we proceed to choose its value? \\
 
+From the equation 13, optimal solution ${x^*}$ can be
+found by setting it as the Lagrangian and differentiating the equation in respect to x:
+
+\begin{equation}
+ L(x) = \norm{Ax - b}^{2} + \alpha \norm{x}^2
+\end{equation}
+
+\begin{equation}
+  \frac{dL}{dx} = 2A^T(Ax - b) + 2\alpha x = 0
+\end{equation}
+
+The optimal solution or ${x^*}$ can be expressed by solving equation 15:
+
+\begin{equation}
+  x^* = (A^TA + \alpha I)^{-1} A^Tb
+\end{equation}
+
+Purpose behind ${\alpha}$ in this context is to adjust the fit of the model to the given data. It is particularly useful in case matrix A is poorly conditioned or nearly singular and it needs to be adjusted to prevent overfitting. ${\alpha}$ is very important and it is often chosen over cross-validation or based-on given knowledge of level of fluctuation in the data. When choosing ${\alpha}$, the value has to be chosen optimaly to minimize the residual of ${\norm{Ax-b}}$ while keeping the solution of ${x}$ small. \\
+
+\item We now consider the Hilbert matrix ${H \in R^{n\times n}}$ , with entries defined as follows:
+
+\begin{equation}
+ H_{ij} = \frac{1}{i + j - 1}
+\end{equation}
+
+for every i, j = 1, . . . , n. Write a Matlab script \textit{illposedHilbert.m} in which you generate H for n =
+50, 100, 200, 300, 400, 500, 1000 and solve the problem ${Hx = b}$, for ${b = Hx}$ exact and x exact generated through
+the function \textit{rand(n,1)}. To make your results reproducible, reinitialize the random number generator to its
+startup configuration by adding rng(’default’) at the beginning of your script. Produce also two figures
+in which you plot: (I) the condition number of H (use \textit{cond()} in Matlab) against n; (II) the norm of the error ${\norm{x_{exact} - x_{2}}}$ against n.
+
+\newpage
+
+\begin{lstlisting}
+    rng('default');
+
+    n = [50, 100, 200, 300, 400, 500, 1000];
+    condNum = zeros(length(n), 1);
+    errorNorms = zeros(length(n), 1);
+
+    for i = 1:length(n)
+        H = hilb(n(i));
+        x_exact = rand(n(i), 1);
+        b = H * x_exact;
+        x = H \ b;
+        condNum(i) = cond(H);
+        errorNorms(i) = norm(x_exact - x);
+    end
+    
+    ... graph the result ...
+\end{lstlisting}
+
+\vspace{20px}
+
+The values of ${n}$ are stored in a predefined array of the same name. Then the array is looped through and each element is used to create a hilbert matrix using library function ${hilb(matrixDimension)}$, and ${x_{exact}}$. Which then is used to calculate individual conditional number and error norm. The results are then plotted both as a scatter and line graph. Resulting graph is as the following: \\
+
+\vspace{20px}
+
+ \begin{figure}[h!]
+    \begin{minipage}[c]{1\linewidth}
+        \centering
+        \includegraphics[width=0.9\linewidth]{./figures/ex5b.png}
+    \end{minipage}
+  \caption{Illposed Hilbert Matrix's conditional numbers and error norms}
+\end{figure}
+
+\newpage
+
+\item We now focus our attention on the case n = 100. Write a Matlab script regularizedHilbert.m in
+which you estimate the regularized solution x reg according to Eq. (1) by using at least 10 different values of the
+parameter ${\alpha}$ (explain your choice of the values). To visualize the results, produce two figures in which you plot:
+(I) the norm of the error ${\norm{x_{exact} - x_{2}}_2}$ against the values of ${\alpha}$; (II) 
+${\norm{Hx = b}_2}$ against ${\norm{x}_2}$ for the different
+values of ${\alpha}$. Comment your results. \\
+
+Tikhonov regularization introduces a regularization parameter ${\alpha}$, which controls the trade-off be-
+tween the least squares fit ${\norm{Hx - b}_2}$ and the magnitude of the solution vector ${\norm{x}^2}$, as described in the equation 13.
+
+\end{enumerate}
 
 
 \end{document}
