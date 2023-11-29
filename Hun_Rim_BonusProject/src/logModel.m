@@ -32,10 +32,26 @@ fprintf('RMSE (Original Exponential Model): %.4f\n', rmse_original);
 
 zO = exp(factorsO(1) + factorsO(2) * xaxis);
 
+[alphas, residuals, rmse_nonlinear, exitFlag, J] = levenbergMarquardt(xaxis, consumption, [1; 1], 1000, 0.5, 1);
+zNL = alphas(1) * xaxis.^alphas(2);
+
+
+model = @(p, x) p(1) * x.^p(2);
+
+% Set initial guess for the parameters
+initial_guess = [1, 1]; % Adjust based on your understanding
+
+% Perform the nonlinear curve-fitting using lsqcurvefit
+[fitted_params, resnorm, residual, exitflag, output] = lsqcurvefit(model, initial_guess, xaxis, consumption);
+y_pred_nonlinear = model(fitted_params, xaxis);
+
+
 scatter(xaxis, consumption, 'x');
 hold on;
-plot(xaxis, zO, 'r-');
-plot(xaxis, z, 'b--');
+% plot(xaxis, zO, 'r-');
+% plot(xaxis, z, 'b--');
+plot(xaxis, zNL, 'g-');
+plot(xaxis, y_pred_nonlinear, "b--");
 xlabel('year');
 ylabel('consumption');
 legend('Original Exponential Model', 'Log-Linearization Model');
