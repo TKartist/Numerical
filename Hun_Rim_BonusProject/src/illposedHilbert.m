@@ -14,18 +14,21 @@ for i = 1:length(n)
 end
 
 subplot(1, 2, 1);
-scatter(n, condNum, 'o', 'DisplayName', 'Conditional Numbers');
+% hold on;
+loglog(n, condNum, 'r-');
 hold on;
-plot(n, condNum, 'r-');
+scatter(n, condNum, 'o', 'DisplayName', 'Conditional Numbers');
 xlabel("n");
 ylabel("Conditional Number");
 hold off;
 title("Conditional Numbers for illposed hilbert matrix")
 
 subplot(1, 2, 2);
-scatter(n, errorNorms, 'o', 'DisplayName', 'Norm Error');
+% scatter(n, errorNorms, 'o', 'DisplayName', 'Norm Error');
+% hold on;
+loglog(n, errorNorms, 'b-');
 hold on;
-plot(n, errorNorms, 'b-');
+scatter(n, errorNorms, 'o', 'DisplayName', 'Norm Error');
 xlabel("n");
 ylabel("Norm of Error norm(x_{exact} - x)");
 hold off;

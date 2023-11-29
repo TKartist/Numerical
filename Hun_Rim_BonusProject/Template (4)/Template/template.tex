@@ -826,7 +826,7 @@ The values of ${n}$ are stored in a predefined array of the same name. Then the 
         \centering
         \includegraphics[width=0.9\linewidth]{./figures/ex5b.png}
     \end{minipage}
-  \caption{Illposed Hilbert Matrix's conditional numbers and error norms}
+  \caption{Illposed Hilbert Matrix's conditional numbers and error norms, for clarity the graph is logged}
 \end{figure}
 
 \newpage
@@ -838,8 +838,42 @@ parameter ${\alpha}$ (explain your choice of the values). To visualize the resul
 ${\norm{Hx = b}_2}$ against ${\norm{x}_2}$ for the different
 values of ${\alpha}$. Comment your results. \\
 
-Tikhonov regularization introduces a regularization parameter ${\alpha}$, which controls the trade-off be-
-tween the least squares fit ${\norm{Hx - b}_2}$ and the magnitude of the solution vector ${\norm{x}^2}$, as described in the equation 13.
+Tikhonov regularization introduces a regularization parameter ${\alpha}$, which controls the trade-off between the least squares fit ${\norm{Hx - b}_2}$ and the magnitude of the solution vector ${\norm{x}_2}$, as described in the equation 13. \\
+
+\begin{lstlisting}
+    alphas = logspace(-19, 1, 10);
+    for i = 1:length(alphas)
+        x_reg = (H' * H + alphas(i) * eye(n)) \ H' * b;
+
+        errorNorms(i) = norm(x_exact - x_reg);
+        solutionNorms(i) = norm(x_reg);
+        residualNorms(i) = norm(H * x_reg - b);
+    end
+        
+    ... graph the result ...
+\end{lstlisting}
+
+\vspace{20px}
+
+The ${x_{reg}}$ value is calculated according to simplified version of the equation 13 as demonstrated in equation 16. From the ${x_{reg}}$ calculated, the rest can be calculated using pre-defined values. The resulting graph is as the following:
+
+\vspace{20px}
+
+ \begin{figure}[h!]
+    \begin{minipage}[c]{1\linewidth}
+        \centering
+        \includegraphics[width=0.9\linewidth]{./figures/ex5c.png}
+    \end{minipage}
+  \caption{Regularized Matrix, the norm of the error ${\norm{x_{exact} - x_2}}$ against ${\alpha}$ (left), and ${\norm{Hx - b}_2}$ against ${\norm{x}_2}$ (right), graphs are logged for better visualization}
+\end{figure}
+
+\newpage
+
+The graph on the left showing the alpha's relation against norm of errors shows that as the value of alpha increases, the norm of error increase in the beginning and fall drastically in the middle, and start increasing exponentially. It is an indication that there is an optimal range of values for ${\alpha}$. \\
+
+Unlike the graph on the right, graph on the left shows a downshift trend and a bit of a rise at the end. Which means as solution norm increases, the residual norm decreases to certain extent and trend is broken after a certain point. Which indicates that as solution norm increases, the graph fits better to the original data and after certain point it starts to overfit. \\
+
+In conclusion, it would be important to find range of ${\alpha}$ values which minimizes the norm of error without underfitting or overfitting the graph to the original datapoints. 
 
 \end{enumerate}
 
