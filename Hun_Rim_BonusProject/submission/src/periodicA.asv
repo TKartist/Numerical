@@ -1,0 +1,17 @@
+[x1, y1] = readTemperatureData('../data/temperature.txt', 1960, 1963);
+
+x = [ones(length(x1), 1), x1, x1.^2];
+
+[factors, ~, ~, ~] = leastSquares(x, y1);
+
+z = factors(1) + factors(2) * cos(2 * pi * x1(1:height(x1))) + factors(3) * sin(2 * pi * x1(1:height(x1)));
+
+scatter(x1, y1, 'x', 'DisplayName', 'Data');
+hold on;
+plot(x1, z(1:duration), 'r', 'DisplayName', 'Quadratic Model');
+xlabel('Year');
+ylabel('Production');
+legend('Origin', 'Quadratic Model');
+legend('Location', 'southoutside', 'Orientation', 'horizontal');
+title('Crude Oil Production 1980 - 2011');
+hold off;
