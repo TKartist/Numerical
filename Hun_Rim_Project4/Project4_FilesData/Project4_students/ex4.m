@@ -12,18 +12,18 @@ axis image;
 load('blur_data/A.mat', 'A');
 guess = ones(size(b));
 max_itr = 200;
-tol = 1e-4;
+tol = 1e-6;
 alpha = 0.01;
+options.type = 'nofill';
+options.diagcomp = alpha;
 
-try
-    M = ichol(A, struct('type', 'nofill', 'diagcomp', alpha));
-catch ME
-    disp('Error');
-    M = diag(diag(A));
-end
+n_A = transpose(A) * A;
+n_B = transpose(A) * b;
+M = ichol(n_A, options);
+P = transpose(M) * M;
 
 [x_myCG, rvec_myCG] = myCG(A, b, guess, max_itr, tol);
-[x_pcg, ~, ~, ~, rvec_pcg] = pcg(A, b, tol, max_itr);
+[x_pcg, ~, ~, iter, rvec_pcg] = pcg(n_A, n_B, tol, max_itr);
 
 figure;
 subplot(2, 2, 1);

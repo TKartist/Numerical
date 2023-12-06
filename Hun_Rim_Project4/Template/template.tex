@@ -11,7 +11,7 @@
 \setassignment
 \setduedate{Wednesday, 6 December 2023, 11:59 PM}
 
-\serieheader{Numerical Computing}{2023}{\textbf{Student:} FULL NAME}{\textbf{Discussed with:} FULL NAME}{Solution for Project 4}{}
+\serieheader{Numerical Computing}{2023}{\textbf{Student:} Hun Rim}{\textbf{Discussed with:} Georgy Batyrev}{Solution for Project 4}{}
 \newline
 
 \assignmentpolicy
@@ -224,7 +224,15 @@ on the results that you observe. \\
   \caption{Comparison of myCG function and pcg function (Top: image deblurring, Bottom: Convergence graph)}
 \end{figure}
 
-Image deblurred through ${pcg}$ shows more bluriness than the deblurred image obtained through ${myCG}$ method.To clarify, even though it is not absolutely clear, if viewed with focus, it is visible ${pcg}$ method does deblure the image. Which means deblurring through ${pcg}$ is not complete or less progressed in the given iteration limit. ${myCG}$'s convergence shows a similar trend to figure 1 computed before, monotonically decreasing. From the plotting of ${ResidualVSIteration}$ of ${pcg}$, it shows residual did show some decrease in residual overall, which indicates it does deblur the image but just in a slower pace of converging in comparison to ${myCG}$ implementation. From both the image and graph, it is clear ${myCG}$ implementation is more efficient than ${pcg}$ and ${pcg}$ has higher computational cost in an individual deblurring process.
+Script for implementation can be seen in ${ex4.m}$. \\
+
+\newpage
+
+In terms of image deblurring, both methodologies exhibit remarkable effectiveness, yielding outcomes that are almost indistinguishable, leaving only subtle traces of variance. However, a more pronounced differentiation emerges when we observe their convergence behaviors. \\
+
+The myCG method presents a recognizable, though nonlinear, design with a convergence trajectory that gently falls. As it iteratively moves closer to convergence, it shows a distinctive stabilization phase that is in perfect alignment with the expected behavior. \\
+
+In contrast, the pcg approach unfolds with an strictly decreasing pattern, carefully following to a declining trajectory. Although the two methods appear to follow a similar inverse logarithmic trend, the PCG approach stands out due to its strict adherence to a continually declining pattern. This contrast with the myCG approach adds another level of complexity to the convergence, as it periodically generates fluctuations followed by a harmonic stabilization as expected and shown from the implementation. \\
 
 \item When would pcg be worth the added computational cost? What about if you are deblurring lots of images with
 the same blur operator? \\
