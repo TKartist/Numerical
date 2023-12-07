@@ -1,0 +1,121 @@
+\documentclass[unicode,11pt,a4paper,oneside,numbers=endperiod,openany]{scrartcl}
+
+\renewcommand{\thesubsection}{\arabic{subsection}}
+
+\input{assignment.sty}
+
+
+\begin{document}
+
+
+\setassignment
+\setduedate{Wednesday, December 20, 2023, 11:59 PM}
+
+\serieheader{Numerical Computing}{2023}{Student: FULL NAME}{Discussed with: FULL NAME}{Solution for Project 5}{}
+\newline
+
+\assignmentpolicy
+
+
+The purpose of this project is to implement the Simplex Method to find the solution of linear programs, involving both the minimisation and the maximisation of the objective function.
+
+\section{Graphical Solution of Linear Programming Problems [20 points]}
+Please consider the following two problems:
+\begin{enumerate}
+	\item[(1)] \begin{equation*}
+		\begin{aligned}
+		& \text{min}  &  z=4x&+y\\
+		& \text{ s.t.} &  x+2y &\leq 40 \\
+		& &   x+y &\geq 30\\
+		& &   2x+3y &\geq 72 \\
+		& &  x,\,y &\geq0 \\
+		\end{aligned}
+		\end{equation*}
+	\item[(2)] A tailor plans to sell two types of trousers, with production costs of 25 CHF and 40 CHF, respectively. The former type can be sold for 85 CHF, while the latter for 110 CHF. The tailor estimates a total monthly demand of 265 trousers. Find the number of units of each type of trousers that should be produced in order to maximise the net profit of the tailor, if we assume that the he cannot spend more than 7000 CHF in raw materials.
+\end{enumerate}
+Start by writing problem (2) as a linear programming problem. Then complete the following tasks:
+\begin{itemize}
+	\item Solve the system of inequalities.
+	\item Plot the feasible region identified by the constraints.
+	\item Find the optimal solution and the value of the objective function in that point.
+\end{itemize}
+
+
+\section{Implementation of the Simplex Method [30 points]}
+
+In this first part of the assignment, you are required to complete 2 functions which are part of a dummy implementation of the simplex method. Specifically you have to complete the TODOs in:
+\begin{itemize}
+	\item \emph{standardise.m}, which writes a maximisation or minimisation input problem in standard form;
+	\item \emph{simplexSolve.m}, which solves a maximisation or minimisation problem using the simplex method.
+\end{itemize}
+You are given also some already-implemented functions to help you in your task: \emph{simplex.m} is a wrapper which calls all the functions necessary to find a solution to the linear program; \emph{auxiliary.m} solves the auxiliary problem to find a feasible starting basic solution of the linear program; \emph{printSol.m} is a function which prints the optimal solution found by the simplex algorithm. Finally, \emph{testSimplex.m} presents a series of 6 problems to check if your implementation is correct, before moving to the next part of the assignment. Additional details to aid you in your implementation can be found in the comments inside the code.
+
+\section{Applications to Real-Life Example: Cargo Aircraft [25 points]}
+
+In this second part of the assignment, you are required to use the simplex method implementation to solve a real-life problem taken from economics (constrained profit maximisation).
+
+A cargo aircraft has 4 compartments (indicated simply as $S_1,\dots,S_4$) used to store the goods to be transported. Details about the weight capacity and storage capacity of the different compartments can be inferred from the data reported in the following table: 
+
+\begin{center}
+ \begin{tabular}{||c | c | c ||} 
+ \hline
+ Compartment & Weight Capacity ($t$) & Storage Capacity ($m^3$) \\ [0.5ex] 
+ \hline\hline
+ $S_1$ & 18 & 11930\\ 
+ \hline
+ $S_2$ & 32 & 22552\\
+ \hline
+ $S_3$ & 25 & 11209\\
+ \hline
+ $S_4$ & 17 & 5870\\
+ \hline
+\end{tabular}
+\end{center}
+
+The following four cargos are available for shipment during the next flight:
+
+\begin{center}
+ \begin{tabular}{|| c | c | c | c ||} 
+ \hline
+ Cargo & Weight ($t$) & Volume ($m^3/t$) & Profit ($\text{CHF}/t$) \\ [0.5ex] 
+ \hline\hline
+ $C_1$ & 16  & 320 & 135 \\ 
+ \hline
+ $C_2$ & 32  & 510 & 200 \\
+ \hline
+ $C_3$ & 40 & 630 & 410 \\
+ \hline
+ $C_4$ & 28 & 125 & 520 \\
+ \hline
+\end{tabular}
+\end{center}
+
+Any proportion of the four cargos can be accepted, and the profit obtained for each cargo is increased by $10\%$ if it is put in $S_2$, by $20\%$ if it is put in $S_3$ and by $30\%$ if it is put in $S_4$, due to the better storage conditions. The objective of this problem is to determine which amount of the different cargos will be transported and how to allocate it among the different compartments, while maximising the profit of the owner of the cargo plane. Specifically you have to:
+\begin{enumerate}
+	\item Formulate the problem above as a linear program: what is the objective function? What are the constraints? Write down all equations, with comments explaining what you are doing.
+	\item Create a script \emph{exercise2.m} which uses the simplex method implemented in the previous exercise to solve the problem. What is the optimal solution? Visualise it graphically and briefly comment the results obtained (are you surprised of this outcome on the basis of your data?).
+\end{enumerate}
+
+
+\section{Cycling and Degeneracy [10 points]}
+
+Consider now the following simple problem:
+\begin{alignat*}{2}
+	&\text{max}\;\, && z = 3x_1+4x_2,\\
+	&\text{s.t.} && 4x_1+3x_2\leq 12\\
+	& && 4x_1+x_2\leq 8\\
+	& && 4x_1+2x_2\leq 8\\
+	& && x_1, x_2 \geq 0.
+\end{alignat*}
+
+\begin{enumerate}
+	\item Create a script \emph{exercise3.m} which uses the simplex method implemented above to solve this problem. Do you achieve convergence within the maximum number of iterations (given by the maximum number of possible basic solutions)? Do you notice any strange behaviour? (\emph{hint:} check, e.g., the indices of the entering and departing variables)
+	\item Look at the number of constraints and at the number of unknowns: what can you notice about the underlying system of equations? Represent them graphically and try to use this information to explain the behaviour of your solver in the previous point. 
+\end{enumerate}
+
+\section{Quality of the Code \& Report [15 points]}
+
+Each project sums up to 100 points, out of which 15 points are dedicated to the general quality of your written report and of the code submitted. Your report should be a coherent document. If there are theoretical questions, explain and justify your answers. If you made a particular choice in your implementation that might be out of the ordinary, please explain it in the report. The code you submit should be self-contained and executable. It should include the set-up for all the results that you obtained and listed in your report. Furthermore, it should be readable and include comments explaining the more complicated steps.
+
+
+\end{document}
