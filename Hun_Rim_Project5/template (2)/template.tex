@@ -1,5 +1,6 @@
 \documentclass[unicode,11pt,a4paper,oneside,numbers=endperiod,openany]{scrartcl}
 \usepackage{listings}
+\usepackage{amsmath}
 
 \renewcommand{\thesubsection}{\arabic{subsection}}
 
@@ -170,20 +171,79 @@ Any proportion of the four cargos can be accepted, and the profit obtained for e
  
  To simplify the problem, there are 4 cargos and 4 compartments with all the necessary information. To calculate which configuration can maximize the profit, the problem can be converted to an objective function.
  
+ \begin{center}
 \begin{equation*}
-    \begin{aligned}
-    & \text{max}  &  z=60x&+70y\\
-    & \text{ s.t.} &  25x+40y &\leq 7000 \\
-    & &   x+y &\leq 265\\
-    & &  x,\,y &\geq0 \\
-    \end{aligned}
+\begin{aligned}
+\text{max z}= (135x_{11} + 200x_{12} + 410x_{13} + 520x_{14}) +\\
+ 1.1(135x_{21} + 200x_{22} + 410x_{23} + 520x_{24}) + \\
+ 1.2(135x_{31} + 200x_{32} + 410x_{33} + 520x_{34}) + \\
+ 1.3(135x_{41} + 200x_{42} + 410x_{43} + 520x_{44}) 
+\end{aligned}
 \end{equation*}
 
+\end{center}
 
+Where ${x_{ij}}$ represents the Cargo ${j}$ stored in Compartment ${i}$. \\
+
+\textbf{Constraints}:
+\begin{enumerate}
+ \item Non-negative value constraints:
+ \begin{equation*}
+  x_{ij} >= 0, \text{ where } 0 \leq i,j \leq 4
+ \end{equation*}
+ \item Compartment Weight Constraints(Sum of cargo weight in compartment should not exceed the compartment weight limit):
+ \begin{equation*}
+  \begin{aligned}
+   x_{11} + x_{12} + x_{13} + x_{14} \leq 18 \\
+   x_{21} + x_{22} + x_{23} + x_{24} \leq 32 \\
+   x_{31} + x_{32} + x_{33} + x_{34} \leq 25 \\
+   x_{41} + x_{42} + x_{43} + x_{44} \leq 17 \\
+  \end{aligned}
+ \end{equation*}
+ \item Compartment Volume Constraints (Sum of cargo volume in compartment should not exceed the compartment volume limit):
+ \begin{equation*}
+  \begin{aligned}
+   320x_{11} + 510x_{12} + 630x_{13} + 125x_{14} \leq 11930 \\
+   320x_{21} + 510x_{22} + 630x_{23} + 125x_{24} \leq 22552 \\
+   320x_{31} + 510x_{32} + 630x_{33} + 125x_{34} \leq 11209 \\
+   320x_{41} + 510x_{42} + 630x_{43} + 125x_{44} \leq 5870 \\
+  \end{aligned}
+ \end{equation*}
  
+  \item Cargo Weight Constraints (Sum of weight beloning to Cargo ${j}$ in all Compartments should be equivalent or less than total weight of Cargo ${j}$):
+ \begin{equation*}
+  \begin{aligned}
+   x_{11} + x_{21} + x_{31} + x_{41} \leq 16 \\
+   x_{12} + x_{22} + x_{32} + x_{42} \leq 32 \\
+   x_{13} + x_{23} + x_{33} + x_{43} \leq 40 \\
+   x_{14} + x_{24} + x_{34} + x_{44} \leq 28 \\
+  \end{aligned}
+ \end{equation*}
+
 \end{enumerate}
 
+\item[Sol(3.2)] According to the found linear program, the solution has been implemented in the ${exercise2.m}$ script. Result of optimal solution has been calculated through the implemented ${simplex()}$ function from the ${simplex.m}$. The result is as the following: \\
 
+\begin{center}
+\begin{tabular}{l|l|l|l|l|r}
+ & ${S_1}$ & ${S_2}$ & ${S_3}$ & ${S_4}$ & Total Cargo \\
+ \hline
+ ${C_1}$ & 0 & 0 & 0 & 0 & 0 \\
+  \hline
+ ${C_2}$ & 18 & 6 & 0 & 0 & 24 \\
+  \hline
+ ${C_3}$ & 0 & 26 & 14 & 0 & 40 \\
+  \hline
+ ${C_4}$ & 0 & 0 & 11 & 17 & 28 \\
+  \hline
+ Compartment Cargo & 18 & 32 & 25 & 17 & \\
+\end{tabular}
+\end{center}
+
+According to the optimal solution found through the ${simplex}$ method, the maximum profit is ${41890 CHF}$.
+
+In conclusion, none of the cargo 1 has been moved, 24 out of 32 cargos were moved out of cargo 2. Rest of cargo 3 and 4 were transported. Due to it, all the compartments were completely filled. As a result, maximum total profit estimated was ${41,890 CHF}$. As expected, the cargo with higher profit was placed in the compartment with higher profit increase. Because the compartment capacity was visibly lower than amount of cargo present, as a result, cargo 1 and 2 which had low profit was completely left out or at least some of it was left out as expected. Although, maximum total profit calculated from the information was certainly lower than what was expected from the first look.  
+\end{enumerate}
 
 \section{Cycling and Degeneracy [10 points]}
 
