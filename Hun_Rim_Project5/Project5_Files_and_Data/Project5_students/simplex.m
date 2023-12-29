@@ -13,6 +13,7 @@ n = size(A,2);
 
 % TODO: Compute the maximum number of basic solutions of the original problem (i.e., the maximum number of iterations necessary to solve the problem)
 itMax = factorial(n+m) / (factorial(n) * factorial(m)); 
+disp(itMax);
 
 % Writing the problem in standard form
 [A_aug,h,c_aug] = standardize(type,A,h,c,m,sign);

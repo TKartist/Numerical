@@ -7,6 +7,7 @@ nIter = 0;
 % Compute B^{-1}*D and B^{-1}*h
 BiD = B\D;
 Bih = B\h;
+disp(x_B)
 
 % TODO: Compute the reduced cost coefficients
 r_D = c_D - c_B * BiD; 
@@ -23,8 +24,9 @@ else
 end
 
 while(optCheck~=tol)
-    disp(x_B);
+    disp()
     if optCheck
+        fprintf('Optimality Condition Met \n');
         break;
     end
 
@@ -43,18 +45,17 @@ while(optCheck~=tol)
     index_in = index_D(1,idxIN);
     
     % TODO: Evaluate the coefficients ratio for the column corresponding to the entering variable
-    ratio = Bih./BiD(:,idxIN);
+    ratio = Bih./(BiD(:,idxIN));
+    positiveRatios = ratio(ratio > 0);
+    if isempty(positiveRatios)
+        error('Problem may be unbounded');
+    end
 
+    [~, idx] = min(positiveRatios);
+    reduced = find(ratio == positiveRatios(idx));
+    
     % TODO: Find the smallest positive ratio
-    for i = 1:length(ratio)
-        if(ratio(i,1)<0)
-            ratio(i,1) = Inf;
-        end
-    end
-    idxOUT = find(ratio==min(ratio));
-    if(length(idxOUT)>1)
-        idxOUT = min(idxOUT);
-    end
+    idxOUT = min(reduced);
     
     out = B(:,idxOUT);
     c_out = c_B(1,idxOUT);
@@ -86,14 +87,13 @@ while(optCheck~=tol)
     
     % Detect inefficient looping if nIter > total number of basic solutions
     nIter = nIter + 1;
-     fprintf("Index In: %d\n", index_in);
-       fprintf("Index Out: %d\n", index_out);
     if(nIter>itMax)
        error('Incorrect loop, more iterations than the number of basic solutions');
     end
 
     % TODO: Compute the new x_B
     x_B = Bih - (BiD * x_D); 
+    
 end
 
 end

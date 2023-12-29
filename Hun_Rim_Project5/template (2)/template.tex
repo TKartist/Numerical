@@ -2,6 +2,9 @@
 \usepackage{listings}
 \usepackage{amsmath}
 
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+
 \renewcommand{\thesubsection}{\arabic{subsection}}
 
 \input{assignment.sty}
@@ -45,9 +48,7 @@ Start by writing problem (2) as a linear programming problem. Then complete the 
 \vspace{20px}
 
 \begin{enumerate}
- \item[Sol (1.1)] The optimal solution to the equation (1) is as the following. According to the line segment between the inequality functions, it is easy to identify that the optimal minimum value of ${z = 106}$ at the point ${P=(24,8)}$. Hence, optimal minimum value of ${x = 24}$ and ${y = 8}$.   \\
-
-    Graphed result of the min(z) linear programming problem is as following, where the optimal point is highlighted with a \textbf{red circle}: \\
+ \item[Sol (1.1)] The optimal solution to the equation (1) is as the following. According to the line segment between the inequality functions, it is easy to identify that the optimal minimum value of ${z = 106}$ at the point ${P=(24,8)}$. There are 2 other vertices, one at (36, 0) which results in ${z}$ to be 144 and another at (40, 0) which results in ${z}$ to be 160. Hence, optimal minimum value of ${x = 24}$ and ${y = 8}$. Graphed result of the min(z) linear programming problem is as following, where the optimal point is highlighted with a \textbf{red circle}: \\
 \begin{figure}[h!]
     \begin{minipage}[c]{1\linewidth}
         \centering
@@ -80,8 +81,7 @@ Demand is constrained by 265 so sum of ${x}$ and ${y}$ is limited by it, and the
     \caption{Plotted optimal feasible region of trouser production problem}
 \end{figure}
 
-As explained before, the optimal feasible region is highlighted in light-blue color and the optimal value of ${z}$ through vertices of the polytope. Found maximum profit (including the production cost) is ${max(z) = 16150 CHF}$ by producing 240 ${trouserA}$ and 25 ${trouserB}$. (${optimal(x)=240}$, ${optimal(y)=25}$) \\
-
+As explained before, the optimal feasible region is highlighted in light-blue color and the optimal value of ${z}$ through vertices of the polytope. Found maximum profit (including the production cost) is ${max(z) = 16150 CHF}$ by producing 240 ${trouserA}$ and 25 ${trouserB}$. (${optimal(x)=240}$, ${optimal(y)=25}$) There were other vertexes at (265, 0) which gave profit of ${15900CHF}$ and at (0, 175) which gave ${12250CHF}$ but the maximum was at (240, 25). \\
 
 \begin{lstlisting}[language=Matlab]
     c = [-60; -70];
@@ -99,9 +99,7 @@ As explained before, the optimal feasible region is highlighted in light-blue co
 
 \vspace{20px}
 
-One thing to note is that the values of ${c}$ are multiplied by ${-1}$ unlike the solution of the first problem because the first problem was looking for a minimum, but here the solution sought for is the maximum. \\
-
-The vertice of polytope (intersection of line segment) and the optimal solution of the linear programming problem was calculated using ${linprog}$ Matlab function, similar to the solution of linear programming problem (1). Please refer to the ${ex1b.m}$ script to view the implementation for the whole solution. 
+One thing to note is that the values of ${c}$ are multiplied by ${-1}$ unlike the solution of the first problem because the first problem was looking for a minimum, but here the solution sought for is the maximum. The vertice of polytope (intersection of line segment) and the optimal solution of the linear programming problem was calculated using ${linprog}$ Matlab function, similar to the solution of linear programming problem (1). Please refer to the ${ex1b.m}$ script to view the implementation for the whole solution. 
 
 
 \section{Implementation of the Simplex Method [30 points]}
@@ -114,7 +112,7 @@ In this first part of the assignment, you are required to complete 2 functions w
 You are given also some already-implemented functions to help you in your task: \emph{simplex.m} is a wrapper which calls all the functions necessary to find a solution to the linear program; \emph{auxiliary.m} solves the auxiliary problem to find a feasible starting basic solution of the linear program; \emph{printSol.m} is a function which prints the optimal solution found by the simplex algorithm. Finally, \emph{testSimplex.m} presents a series of 6 problems to check if your implementation is correct, before moving to the next part of the assignment. Additional details to aid you in your implementation can be found in the comments inside the code. \\
 
 \begin{enumerate}
- \item[Solution:] All the implementations are given in the ${standardise.m}$, ${simplexSolve.m}$, and ${simplex.m}$ scripts in the ${Project5\_Files\_and\_Data}$ folder. All the tests from the ${testSimplex.m}$ script passes. \textit{Please refer to the scripts to see the implementation.}
+ \item[Sol(2):] All the implementations are given in the ${standardise.m}$, ${simplexSolve.m}$, and ${simplex.m}$ scripts in the ${Project5\_Files\_and\_Data}$ folder. All the tests from the ${testSimplex.m}$ script passes. \textit{Please refer to the scripts to see the implementation.}
 \end{enumerate}
 
 
@@ -260,6 +258,62 @@ Consider now the following simple problem:
 	\item Create a script \emph{exercise3.m} which uses the simplex method implemented above to solve this problem. Do you achieve convergence within the maximum number of iterations (given by the maximum number of possible basic solutions)? Do you notice any strange behaviour? (\emph{hint:} check, e.g., the indices of the entering and departing variables)
 	\item Look at the number of constraints and at the number of unknowns: what can you notice about the underlying system of equations? Represent them graphically and try to use this information to explain the behaviour of your solver in the previous point. 
 \end{enumerate}
+
+\begin{enumerate}
+ \item[Sol(4.1)] The equation can be re-structured as the following to be solved with simplex method:
+ \begin{equation*}
+  c=\begin{bmatrix}
+     3 \\ 4 \\ 0 \\ 0 \\ 0\\
+    \end{bmatrix},
+    A=\begin{bmatrix}
+       4 & 3 & 1 & 0 & 0 \\
+       4 & 1 & 0 & 1 & 0 \\
+       4 & 2 & 0 & 0 & 1 \\
+      \end{bmatrix},
+    h=\begin{bmatrix}
+       12 \\ 8 \\ 8 \\
+      \end{bmatrix}
+ \end{equation*}
+
+ Running the ${exercise3.m}$ results in displaying an error message "Problem may be unbounded". Which means the convergence wasn't achieved within the maximum number of set iterations which was calculated to be 56. Also from printing the index\_in and index\_out, it seems it is cycling between the 2 and 4, hence, it is not converging I am assuming.\\
+ 
+ \newpage
+ 
+ The value of x\_B is as the following in the final iteration in the given limit.
+ 
+ \begin{center}
+  \begin{equation*}
+   x\_B=\begin{bmatrix}
+         4 \\ 2 \\ 0 \\
+        \end{bmatrix}
+  \end{equation*}
+ \end{center}
+ 
+ The value of x\_B was the same for many iterations. Which makes sense as a basic feasible solution containing 0 is a degenerate solution indicating a potential source of error in the constraints.\\
+ 
+ \item[Sol(4.2)] Visualization of the linear programming problem:
+ \begin{center}
+ \begin{tikzpicture}
+\begin{axis}[
+	xmin=-3, xmax=6,
+	ymin=-5, ymax=10,
+	axis lines=center,
+	axis equal image,
+	xlabel=$x1$,
+	ylabel=$x2$,
+]
+
+\addplot[domain=0:6, samples=100, blue, thick] {4 - 4/3*x};
+\addplot[domain=0:6, samples=100, red, thick] {8 - 4*x};
+\addplot[domain=0:6, samples=100, green, thick] {4 - 2*x};
+\node[label={0:{(0,4)}},circle,fill,inner sep=2pt] at (axis cs:0,4) {};
+\node[label={180:{(2,0)}},circle,fill,inner sep=2pt] at (axis cs:2,0) {};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+Now the problem is graphed, we can clearly see that the constraints fail to form a feasible region due to the linearly dependent constraints. This would be a possible reason for the failure of the simplex method causing the algorithm to swap between the same set of basic feasible solutions without converging towards a final solution. In other words, there was a 'cycle' formed due to the degenerate solution.
+\end{enumerate}
+
 
 \section{Quality of the Code \& Report [15 points]}
 

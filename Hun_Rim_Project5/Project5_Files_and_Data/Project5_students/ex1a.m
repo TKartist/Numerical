@@ -28,7 +28,7 @@ fimplicit(@(x, y) x + y - 30, 'g', 'LineWidth', 2);   % x + y ≥ 30
 fimplicit(@(x, y) 2*x + 3*y - 72, 'b', 'LineWidth', 2); % 2x + 3y ≥ 72
 
 % Highlight the feasible region
-x_vals = linspace(0, 30, 100);
+x_vals = linspace(0, 36, 100);
 y1_vals = (40 - x_vals) / 2;
 y2_vals = max(0, 30 - x_vals);
 y3_vals = max((72 - 2*x_vals) / 3, 0);
