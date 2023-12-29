@@ -51,10 +51,10 @@ while(optCheck~=tol)
     end
 
     [~, idx] = min(positiveRatios);
-    reduced = find(ratio == positiveRatios(idx));
+    candidates = find(ratio == positiveRatios(idx));
     
     % TODO: Find the smallest positive ratio
-    idxOUT = min(reduced);
+    idxOUT = min(candidates);
     
     out = B(:,idxOUT);
     c_out = c_B(1,idxOUT);
@@ -65,21 +65,21 @@ while(optCheck~=tol)
     D(:,idxIN) = out;
     c_B(1,idxOUT) = c_in;
     c_D(1,idxIN) = c_out;
-    index_B(1,idxOUT) = index_in;
-    index_D(1,idxIN) = index_out;
+    index_B(1,idxOUT) =
+    %index_D(1,idxIN) =
      
     % Compute B^{-1}*D and B^{-1}*h
     BiD = B\D;
     Bih = B\h;
     
     % TODO: Compute the reduced cost coefficients
-    r_D = c_D - (c_B * BiD);
+    %r_D = 
 
     % TODO: Check the optimality condition 
     if(strcmp(type,'max'))
-        optCheck = all(r_D <= 0);
+        %optCheck = 
     elseif(strcmp(type,'min'))
-        optCheck = all(r_D >= 0);
+        %optCheck = 
     else
         error('Incorrect type specified. Choose either a maximisation (max) or minimisation (min) problem.')
     end
@@ -91,7 +91,7 @@ while(optCheck~=tol)
     end
 
     % TODO: Compute the new x_B
-    x_B = Bih - (BiD * x_D); 
+    %x_B = 
 
 end
 

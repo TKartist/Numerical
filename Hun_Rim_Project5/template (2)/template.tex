@@ -1,4 +1,5 @@
 \documentclass[unicode,11pt,a4paper,oneside,numbers=endperiod,openany]{scrartcl}
+\usepackage{listings}
 
 \renewcommand{\thesubsection}{\arabic{subsection}}
 
@@ -11,7 +12,7 @@
 \setassignment
 \setduedate{Wednesday, December 20, 2023, 11:59 PM}
 
-\serieheader{Numerical Computing}{2023}{Student: FULL NAME}{Discussed with: FULL NAME}{Solution for Project 5}{}
+\serieheader{Numerical Computing}{2023}{Student: Hun Rim}{Discussed with: Georgy Batyrev}{Solution for Project 5}{}
 \newline
 
 \assignmentpolicy
@@ -40,6 +41,67 @@ Start by writing problem (2) as a linear programming problem. Then complete the 
 	\item Find the optimal solution and the value of the objective function in that point.
 \end{itemize}
 
+\vspace{20px}
+
+\begin{enumerate}
+ \item[Sol (1.1)] The optimal solution to the equation (1) is as the following. According to the line segment between the inequality functions, it is easy to identify that the optimal minimum value of ${z = 106}$ at the point ${P=(24,8)}$. Hence, optimal minimum value of ${x = 24}$ and ${y = 8}$.   \\
+
+    Graphed result of the min(z) linear programming problem is as following, where the optimal point is highlighted with a \textbf{red circle}: \\
+\begin{figure}[h!]
+    \begin{minipage}[c]{1\linewidth}
+        \centering
+        \includegraphics[width=0.9\linewidth]{./figure1.png}
+    \end{minipage}
+    \caption{Plotted optimal region of linear programming problem (1)}
+\end{figure}
+
+Please refer to ${ex1a.m}$ script to see the code used to calculate the optimal minimum and find the feasible area. \\
+
+\item[Sol (1.2)] First, the trouser production problem has to be converted to a linear programming problem using the information given in the text. Under the assumption ${z = saleProfit}$, \\ ${x = aQuantity(60CHF/profitPerPiece)}$, ${y = bQuantity(70CHF/profitPerPiece)}$, we can write the equation linear programming problem as the following: \\
+
+\begin{equation*}
+		\begin{aligned}
+		& \text{max}  &  z=60x&+70y\\
+		& \text{ s.t.} &  25x+40y &\leq 7000 \\
+		& &   x+y &\leq 265\\
+		& &  x,\,y &\geq0 \\
+		\end{aligned}
+		\end{equation*}
+\end{enumerate}
+
+Demand is constrained by 265 so sum of ${x}$ and ${y}$ is limited by it, and the maximum production cost (7000CHF) limits the value of ${x}$ (25CHF for production) and ${y}$ (40CHF for production). Naturally, ${x, y}$ has to be greater than 0, although, not given. \\
+
+\begin{figure}[h!]
+    \begin{minipage}[c]{1\linewidth}
+        \centering
+        \includegraphics[width=0.9\linewidth]{./figure2.png}
+    \end{minipage}
+    \caption{Plotted optimal feasible region of trouser production problem}
+\end{figure}
+
+As explained before, the optimal feasible region is highlighted in light-blue color and the optimal value of ${z}$ through vertices of the polytope. Found maximum profit (including the production cost) is ${max(z) = 16150 CHF}$ by producing 240 ${trouserA}$ and 25 ${trouserB}$. (${optimal(x)=240}$, ${optimal(y)=25}$) \\
+
+
+\begin{lstlisting}[language=Matlab]
+    c = [-60; -70];
+
+    A = [25, 40; 1, 1];
+    b = [7000; 265];
+
+    lowerBounds = [0; 0];
+
+    options = optimoptions('linprog', 'Display','off');
+    [x, fval, exitflag] = linprog(c, A, b, [], [], lowerBounds, [], options);
+    
+    ... Print the optimal solution and Plot the Graph ...
+\end{lstlisting}
+
+\vspace{20px}
+
+One thing to note is that the values of ${c}$ are multiplied by ${-1}$ unlike the solution of the first problem because the first problem was looking for a minimum, but here the solution sought for is the maximum. \\
+
+The vertice of polytope (intersection of line segment) and the optimal solution of the linear programming problem was calculated using ${linprog}$ Matlab function, similar to the solution of linear programming problem (1). Please refer to the ${ex1b.m}$ script to view the implementation for the whole solution. 
+
 
 \section{Implementation of the Simplex Method [30 points]}
 
@@ -48,7 +110,12 @@ In this first part of the assignment, you are required to complete 2 functions w
 	\item \emph{standardise.m}, which writes a maximisation or minimisation input problem in standard form;
 	\item \emph{simplexSolve.m}, which solves a maximisation or minimisation problem using the simplex method.
 \end{itemize}
-You are given also some already-implemented functions to help you in your task: \emph{simplex.m} is a wrapper which calls all the functions necessary to find a solution to the linear program; \emph{auxiliary.m} solves the auxiliary problem to find a feasible starting basic solution of the linear program; \emph{printSol.m} is a function which prints the optimal solution found by the simplex algorithm. Finally, \emph{testSimplex.m} presents a series of 6 problems to check if your implementation is correct, before moving to the next part of the assignment. Additional details to aid you in your implementation can be found in the comments inside the code.
+You are given also some already-implemented functions to help you in your task: \emph{simplex.m} is a wrapper which calls all the functions necessary to find a solution to the linear program; \emph{auxiliary.m} solves the auxiliary problem to find a feasible starting basic solution of the linear program; \emph{printSol.m} is a function which prints the optimal solution found by the simplex algorithm. Finally, \emph{testSimplex.m} presents a series of 6 problems to check if your implementation is correct, before moving to the next part of the assignment. Additional details to aid you in your implementation can be found in the comments inside the code. \\
+
+\begin{enumerate}
+ \item[Solution:] All the implementations are given in the ${standardise.m}$, ${simplexSolve.m}$, and ${simplex.m}$ scripts in the ${Project5\_Files\_and\_Data}$ folder. All the tests from the ${testSimplex.m}$ script passes. \textit{Please refer to the scripts to see the implementation.}
+\end{enumerate}
+
 
 \section{Applications to Real-Life Example: Cargo Aircraft [25 points]}
 
@@ -95,6 +162,27 @@ Any proportion of the four cargos can be accepted, and the profit obtained for e
 	\item Formulate the problem above as a linear program: what is the objective function? What are the constraints? Write down all equations, with comments explaining what you are doing.
 	\item Create a script \emph{exercise2.m} which uses the simplex method implemented in the previous exercise to solve the problem. What is the optimal solution? Visualise it graphically and briefly comment the results obtained (are you surprised of this outcome on the basis of your data?).
 \end{enumerate}
+
+\vspace{20px}
+
+\begin{enumerate}
+ \item[Sol(3.1)]Formulation of the problem into a linear program: \\
+ 
+ To simplify the problem, there are 4 cargos and 4 compartments with all the necessary information. To calculate which configuration can maximize the profit, the problem can be converted to an objective function.
+ 
+\begin{equation*}
+    \begin{aligned}
+    & \text{max}  &  z=60x&+70y\\
+    & \text{ s.t.} &  25x+40y &\leq 7000 \\
+    & &   x+y &\leq 265\\
+    & &  x,\,y &\geq0 \\
+    \end{aligned}
+\end{equation*}
+
+
+ 
+\end{enumerate}
+
 
 
 \section{Cycling and Degeneracy [10 points]}

@@ -27,19 +27,19 @@ end
 % TODO: Correction on the sign of h for auxiliary problem (we want to ensure that h>=0, but we need to flip all the signs)
 for i = 1:m 
     if(h(i)<0)
-        %A(i,:) = 
-        %h(i,:) = 
-        %aug_matrix(i,:) = 
+        A(i,:) = -A(i,:);
+        h(i,:) = -h(i,:);
+        aug_matrix(i,:) = -aug_matrix(i,:);
     end
 end
 
 c_aug = [c, zeros(1,m)];
 if(strcmp(type,'max'))
     % TODO: Extend matrix A by adding the slack variables    
-    %A_aug = 
+    A_aug = [A, aug_matrix]; 
 elseif(strcmp(type,'min'))
 	% TODO: Extend matrix A by adding the surplus variables
-    %A_aug = 
+    A_aug = [A, -aug_matrix];
 else
     error('Incorrect type specified. Choose either a maximisation (max) or minimisation (min) problem.')
 end

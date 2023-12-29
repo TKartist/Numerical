@@ -12,7 +12,7 @@ m = size(A,1);
 n = size(A,2);
 
 % TODO: Compute the maximum number of basic solutions of the original problem (i.e., the maximum number of iterations necessary to solve the problem)
-%itMax = 
+itMax = factorial(n+m) / (factorial(n) * factorial(m)); 
 
 % Writing the problem in standard form
 [A_aug,h,c_aug] = standardize(type,A,h,c,m,sign);
@@ -24,7 +24,7 @@ n = size(A,2);
 [x_B,c_B,index_B] = simplexSolve(type,B,D,c_B,c_D,h,x_B,x_D,index_B,index_D,itMax);
 
 % TODO: Compute the value of the objective function
-%z = 
+z = round(c_B * x_B);
 
 % Output of the solution
 [x_B,index_B] = printSol(z,x_B,index_B,m,n);
