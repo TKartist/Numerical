@@ -153,6 +153,8 @@ for nmesh = 1:8
     disp('  ');
     figure(4)
     [p1,p2] = bisection_spectral(W,coords,picture);
+    disp(p1);
+    disp(p2);
     [cut_spectral] = cutsize(W,p1);
     disp('  ');
     disp(' Hit space to continue ...');

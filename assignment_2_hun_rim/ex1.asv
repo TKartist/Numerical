@@ -1,0 +1,74 @@
+% Initial parameters
+x0 = [0; 0];
+N = 50000;
+tol = 1e-6;
+
+rosenbrock = @(x) (1 - x(1)).^2 + 100 * (x(2) - x(1).^2).^2;
+grad = @(x) [-400 * (x(2) - x(1).^2) * x(1) - 2 * (1 - x(1)); 200 * (x(2) - x(1).^2)];
+disp(gradRosenbrock([0;1]));
+hess = @(x) [-400 * (x(2) - x(1).^2) + 800 * x(1).^2 + 2, -400 * x(1);
+                          -400 * x(1), 200];
+
+% Plot titles
+land_title = 'Iterates on the Rosenbrock Function Energy Landscape';
+norms_title = 'Gradient Norms Over Iterations';
+fs_title = 'Functions over each iterations';
+ntbt = " Newton Backtracking";
+nt = " Newton";
+gd = " Grad";
+gdbt = " GradBacktracking";
+gnorms = "norms";
+fval = "function value";
+
+[x_min_newton_bt, f_min_newton_bt, iterates_newton_bt, grads_newton_bt, newton_history_bt] = Newton(rosenbrock, grad, hess, x0, tol, N, 1);
+[x_min_newton, f_min_newton, iterates_newton, grads_newton, newton_history] = Newton(rosenbrock, grad, hess, x0, tol, N, 0);
+[x_history_bt, grad_history_bt, grad_norms_bt] = GD(rosenbrock, grad, x0, N, tol, 1);
+[x_history, grad_history, grad_norms] = GD(rosenbrock, grad, x0, N, tol, 0);
+
+
+% Plotting landscapes
+landscapes(iterates_newton_bt, strcat(land_title, ntbt));
+landscapes(iterates_newton, strcat(land_title, nt));
+landscapes(x_history_bt, strcat(land_title, gdbt));
+landscapes(x_history, strcat(land_title, gd));
+
+% Plotting gradient norms
+gradient_plots(grads_newton_bt, strcat(norms_title, ntbt), gnorms);
+gradient_plots(grads_newton, strcat(norms_title, nt));
+gradient_plots(grad_norms_bt, strcat(norms_title, gdbt));
+gradient_plots(grad_norms, strcat(norms_title, gd));
+
+% Plotting function convergence
+gradient_plots(newton_history_bt, strcat(fs_title, ntbt));
+gradient_plots(newton_history, strcat(fs_title, nt));
+gradient_plots(grad_history_bt, strcat(fs_title, gdbt));
+gradient_plots(grad_history, strcat(fs_title, gd));
+
+% we add one element at each iterations so this is fine.
+fprintf('Iterations for Newton method with backtracking: %d\n', size(grads_newton_bt, 2));
+fprintf('Iterations for Gradient method with backtracking: %d\n', size(grad_norms_bt, 2));
+
+
+function landscapes(x_history, Title)
+    figure;
+    [x, y] = meshgrid(-1:0.02:1, -1:0.02:1); 
+    z = (1 - x).^2 + 100 .* (y - x.^2).^2;
+    contour(x, y, z, logspace(-0.5, 3.5, 20), 'LineWidth', 1);
+    hold on;
+    plot(x_history(:,1), x_history(:,2), 'g-^', 'LineWidth', 1.5, 'MarkerSize', 5);
+    xlabel('x');
+    ylabel('y');
+    title(Title);
+    hold off;
+end
+
+function gradient_plots(norms, Title)
+    figure;
+    hold on;
+    semilogy(norms, 'b-d', 'LineWidth', 1.5, 'MarkerSize', 3);
+    xlabel('Iterations');
+    ylabel('Gradient Norms');
+    title(Title);
+    set(gca, 'YScale', 'log');
+    hold off;
+end

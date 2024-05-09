@@ -275,7 +275,7 @@ Consider now the following simple problem:
       \end{bmatrix}
  \end{equation*}
 
- Running the ${exercise3.m}$ results in displaying an error message "Problem may be unbounded". Which means the convergence wasn't achieved within the maximum number of set iterations which was calculated to be 56. Also from printing the index\_in and index\_out, it seems it is cycling between the 2 and 4, hence, it is not converging I am assuming.\\
+ Running the ${exercise3.m}$ results in displaying an error message. Which means the convergence wasn't achieved within the maximum number of set iterations which was calculated to be 56. Also from printing the index\_in and index\_out, it seems it is cycling between the 2 and 4, hence, it is not converging I am assuming.\\
  
  \newpage
  
@@ -295,23 +295,23 @@ Consider now the following simple problem:
  \begin{center}
  \begin{tikzpicture}
 \begin{axis}[
-	xmin=-3, xmax=6,
-	ymin=-5, ymax=10,
+	xmin=-1, xmax=10,
+	ymin=-1, ymax=10,
 	axis lines=center,
 	axis equal image,
 	xlabel=$x1$,
 	ylabel=$x2$,
 ]
 
-\addplot[domain=0:6, samples=100, blue, thick] {4 - 4/3*x};
+\addplot[domain=0:6, samples=100, orange, thick] {4 - 4/3*x};
 \addplot[domain=0:6, samples=100, red, thick] {8 - 4*x};
-\addplot[domain=0:6, samples=100, green, thick] {4 - 2*x};
+\addplot[domain=0:6, samples=100, blue, thick] {4 - 2*x};
 \node[label={0:{(0,4)}},circle,fill,inner sep=2pt] at (axis cs:0,4) {};
 \node[label={180:{(2,0)}},circle,fill,inner sep=2pt] at (axis cs:2,0) {};
 \end{axis}
 \end{tikzpicture}
 \end{center}
-Now the problem is graphed, we can clearly see that the constraints fail to form a feasible region due to the linearly dependent constraints. This would be a possible reason for the failure of the simplex method causing the algorithm to swap between the same set of basic feasible solutions without converging towards a final solution. In other words, there was a 'cycle' formed due to the degenerate solution.
+Now the problem is graphed, we can clearly see that the constraints fail to form a feasible region due to the linearly dependent constraints. This would be a possible reason for the failure of the simplex method causing the algorithm to swap between the same set of basic feasible solutions without converging towards a final solution. In other words, there was a 'cycle' formed due to the degenerate solution. We need to remove dependent or redundant constraints to avoid this problem.
 \end{enumerate}
 
 

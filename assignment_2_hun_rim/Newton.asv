@@ -1,0 +1,30 @@
+function [x_min, f_min, iterates, grad_norms, newton_history] = Newton(f, grad_func, hess_func, x0, tol, N, enable_backtracking)    
+    x = x0;
+    iterates = []; 
+    grad_norms = [];
+    newton_history = [f(x)];
+    for k = 1:N
+        alp = 1;
+        grad = grad_func(x);
+        hess = hess_func(x);
+        
+        if norm(grad) < tol
+            break;
+        end
+        if enable_backtracking
+            p = -hess\grad;
+            alp = backtracking(f, grad_func, x, p, alp);
+        else
+            p = 0;
+        end
+        
+        x = x + alp * p;
+        
+        iterates = [iterates, x];
+        newton_history = [newton_history, f(x)];
+        grad_norms = [grad_norms, norm(grad)];
+    end
+    iterates = transpose(iterates);
+    x_min = x;
+    f_min = f(x);
+end
